@@ -1,9 +1,6 @@
-export const gradient_primary = '';
-export const gradient_secondory = '';
+export const col_primary = '#667EEA';
+export const col_secondary = '#764BA2';
 
-export const primary = '';
-export const secondary = '';
-
-export const white = '';
-export const off_whiite = '';
-export const black = '';
+export const col_white = '#FFFFFF';
+export const col_off_white = 'rgba(255,255,255,0.5)';
+export const col_black = '#000000';

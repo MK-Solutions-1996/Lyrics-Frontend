@@ -9,5 +9,8 @@ export const WIDTH = (size) => (width / guidelineBaseWidth) * size;
 export const HEIGHT = (size) => (height / guidelineBaseHeight) * size;
 export const HEADER_HEIGHT = HEIGHT(73);
 export const STATUS_BAR_HEIGHT = HEIGHT(StatusBar.currentHeight);
+export const DEVICE_HEIGHT = height;
+export const DEVICE_WIDTH = width;
+
 const moderateScale = (size, factor = 0.5) =>
   size + (scale(size) - size) * factor;

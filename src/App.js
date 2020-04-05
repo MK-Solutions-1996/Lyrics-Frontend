@@ -1,10 +1,12 @@
 import React from 'react';
 import {StatusBar} from 'react-native';
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
+import MaterialCommunityIcons from 'react-native-vector-icons/FontAwesome';
 
 import All_songs_screen from './SCREENS/All_songs';
 import All_artists_screen from './SCREENS/All_artists';
@@ -23,9 +25,17 @@ import {
   s_app_title,
 } from './CONSTANTS/Sinhala';
 
-import {HEADER_HEIGHT} from './CONSTANTS/Sizes';
+import {HEADER_HEIGHT, HEIGHT, WIDTH} from './CONSTANTS/Sizes';
+import Header_image from './COMPONENTS/Header_image';
+import {
+  col_primary,
+  col_secondary,
+  col_white,
+  col_off_white,
+} from './CONSTANTS/Colors';
 
-const BottomTab = createMaterialBottomTabNavigator();
+//const BottomTab = createMaterialBottomTabNavigator();
+const BottomTab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
@@ -34,18 +44,7 @@ const statusBarHeight = StatusBar.currentHeight;
 const HeaderBackground = () => {
   return (
     <LinearGradient
-      // colors={[
-      //   ' rgba(201,45,253,1) ',
-      //   'rgba(143,46,235,0.9) ',
-      //   'rgba(107,42,210,0.9) ',
-      //   'rgba(125,48,216,1) ',
-      //   'rgba(118,62,255,1) ',
-      //   'rgba(107,42,210,0.9) ',
-      // ]}
-      //colors={['#13547a', '#80d0c7']}
-      //colors={['#c79081', '#dfa579']}
-      //colors={['#09203f', '#537895']}
-      colors={['#667eea', '#764ba2']}
+      colors={[col_primary, col_secondary]}
       style={{flex: 1}}
       start={{x: 0, y: 0}}
       end={{x: 1, y: 0}}>
@@ -67,6 +66,7 @@ function All_songs_stack_navigation() {
         headerStyle: {
           height: HEADER_HEIGHT,
         },
+        headerLeft: () => <Header_image />,
       }}>
       <Stack.Screen
         name="All_songs"
@@ -101,6 +101,7 @@ function All_artists_stack_navigation() {
         headerStyle: {
           height: HEADER_HEIGHT,
         },
+        headerLeft: () => <Header_image />,
       }}>
       <Stack.Screen
         name="All_artists"
@@ -126,34 +127,7 @@ function All_artists_stack_navigation() {
   );
 }
 
-function Others_top_tab_navigation() {
-  return (
-    <TopTab.Navigator
-      //timingConfig={5000}
-      swipeEnabled={false}
-      tabBarOptions={{
-        activeTintColor: '#fff',
-        indicatorStyle: {
-          backgroundColor: 'transparent',
-        },
-        //labelStyle: {fontSize: 12},
-        //tabStyle: {height: HEADER_HEIGH},
-        style: {
-          backgroundColor: 'transparent',
-          position: 'absolute',
-          //top: 0,
-          left: 0,
-          right: 0,
-          //bottom: 20,
-        },
-      }}>
-      <TopTab.Screen name={s_likes} component={Likes_screen} />
-      <TopTab.Screen name={s_playlists} component={Playlist_screen} />
-    </TopTab.Navigator>
-  );
-}
-
-function others_stack_navigation() {
+function Likes_stack_navigation() {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -162,19 +136,43 @@ function others_stack_navigation() {
         headerStyle: {
           height: HEADER_HEIGHT,
         },
+        headerLeft: () => <Header_image />,
       }}>
       <Stack.Screen
-        name={s_app_title}
-        component={Others_top_tab_navigation}
+        name="Likes"
+        component={Likes_screen}
         options={{
           ...TransitionPresets.SlideFromRightIOS,
+          title: s_app_title,
           headerTintColor: '#fff',
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-          headerStyle: {
-            //height: 160, // Specify the height of your custom header
-            //position: 'absolute',
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+function PlayList_stack_navigation() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        //headerShown: false,
+        headerBackground: () => <HeaderBackground />,
+        headerStyle: {
+          height: HEADER_HEIGHT,
+        },
+        headerLeft: () => <Header_image />,
+      }}>
+      <Stack.Screen
+        name="Playlist"
+        component={Playlist_screen}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS,
+          title: s_app_title,
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
           },
         }}
       />
@@ -182,22 +180,128 @@ function others_stack_navigation() {
   );
 }
 
+// function Others_top_tab_navigation() {
+//   return (
+//     <TopTab.Navigator
+//       swipeEnabled={false}
+//       tabBarOptions={{
+//         activeTintColor: '#fff',
+//         indicatorStyle: {
+//           backgroundColor: 'transparent',
+//         },
+//         //labelStyle: {fontSize: 12},
+//         //tabStyle: {height: HEADER_HEIGH},
+//         style: {
+//           backgroundColor: 'transparent',
+//           position: 'absolute',
+//           left: 0,
+//           right: 0,
+//         },
+//       }}>
+//       <TopTab.Screen name={s_likes} component={Likes_screen} />
+//       <TopTab.Screen name={s_playlists} component={Playlist_screen} />
+//     </TopTab.Navigator>
+//   );
+// }
+
+// function others_stack_navigation() {
+//   return (
+//     <Stack.Navigator
+//       screenOptions={{
+//         //headerShown: false,
+//         headerBackground: () => <HeaderBackground />,
+//         headerStyle: {
+//           height: HEADER_HEIGHT,
+//         },
+//         headerLeft: () => <Header_image />,
+//       }}>
+//       <Stack.Screen
+//         name={s_app_title}
+//         component={Others_top_tab_navigation}
+//         options={{
+//           ...TransitionPresets.SlideFromRightIOS,
+//           headerTintColor: '#fff',
+//           headerTitleStyle: {
+//             fontWeight: 'bold',
+//           },
+//           headerStyle: {
+//             //height: 160, // Specify the height of your custom header
+//             //position: 'absolute',
+//           },
+//         }}
+//       />
+//     </Stack.Navigator>
+//   );
+// }
+
 // modal transition ...TransitionPresets.SlideFromRightIOS,.ModalPresentationIOS
 // Transparent modals => search for "Transparent modals"
 
 const Bottom_tab_navigation = () => {
   return (
     <BottomTab.Navigator
-      //initialRouteName={s_so}
-      activeColor="#fff"
-      inactiveColor="rgba(255,255,255,0.5)"
-      barStyle={{backgroundColor: '#667eea'}}>
-      <BottomTab.Screen name={s_songs} component={All_songs_stack_navigation} />
+      tabBarOptions={{
+        tabStyle: {backgroundColor: col_primary},
+        activeTintColor: col_white,
+        inactiveTintColor: col_off_white,
+        //keyboardHidesTabBar: true,
+      }}>
       <BottomTab.Screen
-        name={s_artists}
-        component={All_artists_stack_navigation}
+        name="All_songs"
+        component={All_songs_stack_navigation}
+        options={{
+          tabBarLabel: s_songs,
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons
+              name="music"
+              color={color}
+              size={HEIGHT(20)}
+            />
+          ),
+        }}
       />
-      <BottomTab.Screen name={s_others} component={others_stack_navigation} />
+      <BottomTab.Screen
+        name="All_artists"
+        component={All_artists_stack_navigation}
+        options={{
+          tabBarLabel: s_artists,
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons
+              name="microphone"
+              color={color}
+              size={HEIGHT(20)}
+            />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Likes"
+        component={Likes_stack_navigation}
+        options={{
+          tabBarLabel: s_likes,
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons
+              name="heart"
+              color={color}
+              size={HEIGHT(20)}
+            />
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Playlist"
+        component={PlayList_stack_navigation}
+        options={{
+          tabBarLabel: s_playlists,
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons
+              name="list-alt"
+              color={color}
+              size={HEIGHT(20)}
+            />
+          ),
+        }}
+      />
     </BottomTab.Navigator>
   );
 };

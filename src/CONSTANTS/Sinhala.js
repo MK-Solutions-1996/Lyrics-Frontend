@@ -1,6 +1,9 @@
 export const s_songs = 'සිංදු';
 export const s_artists = 'ගායකයන්';
-export const s_likes = 'ආස ඒවා';
+export const s_likes = 'ආස සිංදු';
 export const s_playlists = 'හදපු ලිස්ට්';
 export const s_others = 'වෙනත්';
 export const s_app_title = 'සිංදු සාජ්ජය​';
+export const s_search = 'සොයන්න​';
+export const s_group_sing = 'සමූහ ගායනය​';
+export const s_and = 'සහ​';
