@@ -1,14 +1,14 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import TestImage from '../../ASSETS/IMAGES/sanuka.jpg';
-import {Avatar} from 'react-native-elements';
-import {HEIGHT, WIDTH} from '../../CONSTANTS/Sizes';
-import {col_white, col_black, col_off_white} from '../../CONSTANTS/Colors';
-import {s_and, s_group_sing} from '../../CONSTANTS/Sinhala';
-import {useNavigation} from '@react-navigation/native';
-import {im_logo} from '../../CONSTANTS/Imports';
+import { Avatar } from 'react-native-elements';
+import { HEIGHT, WIDTH } from '../../CONSTANTS/Sizes';
+import { col_white, col_black, col_off_white } from '../../CONSTANTS/Colors';
+import { s_and, s_group_sing } from '../../CONSTANTS/Sinhala';
+import { useNavigation } from '@react-navigation/native';
+import { im_logo, im_default_artist } from '../../CONSTANTS/Imports';
 
-import {test_artist_array} from '../../TestData';
+import { test_artist_array } from '../../TestData';
 
 const find_artist_by_id = (artistIdArray) => {
   var result = [];
@@ -22,62 +22,69 @@ const find_artist_by_id = (artistIdArray) => {
   return result;
 };
 
-function Song_list({song}) {
+function Song_list({ songObject }) {
   const navigation = useNavigation();
-  const {_id, sinhalaTitle, singlishTitle, type, artist} = song;
+
+  const { _id, sinhalaTitle, singlishTitle, type, artist } = songObject;
   var artistArray = find_artist_by_id(artist);
 
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('Lyrics_view', {
+          songObject,
+          artistArray,
+        })
+      }>
       <View style={styles.container}>
         {type === 'Solo' ? (
           artistArray[0].image.imageAvailability ? (
             <Avatar
               rounded
-              source={{uri: artistArray[0].image.image}}
+              source={{ uri: artistArray[0].image.image }}
               size="large"
-              overlayContainerStyle={{backgroundColor: col_white}}
-              placeholderStyle={{backgroundColor: col_off_white}}
+              overlayContainerStyle={{ backgroundColor: col_white }}
+              placeholderStyle={{ backgroundColor: col_off_white }}
               activeOpacity={0.7}
             />
           ) : (
-            <Avatar
-              rounded
-              source={im_logo}
-              size="large"
-              overlayContainerStyle={{backgroundColor: col_white}}
-              placeholderStyle={{backgroundColor: col_off_white}}
-              activeOpacity={0.7}
-            />
-          )
+              <Avatar
+                rounded
+                source={im_default_artist}
+                size="large"
+                overlayContainerStyle={{ backgroundColor: col_white }}
+                placeholderStyle={{ backgroundColor: col_off_white }}
+                activeOpacity={0.7}
+              />
+            )
         ) : type === 'Duet' ? (
           <Avatar
             rounded
-            source={im_logo}
+            source={im_default_artist}
             size="large"
-            overlayContainerStyle={{backgroundColor: col_white}}
-            placeholderStyle={{backgroundColor: col_off_white}}
+            overlayContainerStyle={{ backgroundColor: col_white }}
+            placeholderStyle={{ backgroundColor: col_off_white }}
             activeOpacity={0.7}
           />
         ) : (
-          type === 'Group' && (
-            <Avatar
-              rounded
-              source={im_logo}
-              size="large"
-              overlayContainerStyle={{backgroundColor: col_white}}
-              placeholderStyle={{backgroundColor: col_off_white}}
-              activeOpacity={0.7}
-            />
-          )
-        )}
+              type === 'Group' && (
+                <Avatar
+                  rounded
+                  source={im_default_artist}
+                  size="large"
+                  overlayContainerStyle={{ backgroundColor: col_white }}
+                  placeholderStyle={{ backgroundColor: col_off_white }}
+                  activeOpacity={0.7}
+                />
+              )
+            )}
         <View style={styles.content}>
           <Text style={styles.sinhalaTitle}>{sinhalaTitle}​</Text>
           <Text style={styles.singlishTitle}>{singlishTitle}</Text>
           {type === 'Solo' ? (
             <Text style={styles.artistName}>{artistArray[0].sinhalaName}</Text>
           ) : type === 'Duet' ? (
-            <View style={{flexDirection: 'row'}}>
+            <View style={{ flexDirection: 'row' }}>
               {artistArray.map((data, index) => (
                 <Text style={styles.artistName}>
                   {index === 0
@@ -87,10 +94,10 @@ function Song_list({song}) {
               ))}
             </View>
           ) : (
-            type === 'Group' && (
-              <Text style={styles.singlishTitle}>{s_group_sing}</Text>
-            )
-          )}
+                type === 'Group' && (
+                  <Text style={styles.singlishTitle}>{s_group_sing}</Text>
+                )
+              )}
         </View>
       </View>
     </TouchableOpacity>

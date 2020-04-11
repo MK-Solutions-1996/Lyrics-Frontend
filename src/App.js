@@ -1,10 +1,10 @@
 import React from 'react';
-import {StatusBar} from 'react-native';
-import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
+import { StatusBar } from 'react-native';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
 import MaterialCommunityIcons from 'react-native-vector-icons/FontAwesome';
 
@@ -25,7 +25,7 @@ import {
   s_app_title,
 } from './CONSTANTS/Sinhala';
 
-import {HEADER_HEIGHT, HEIGHT, WIDTH} from './CONSTANTS/Sizes';
+import { HEADER_HEIGHT, HEIGHT, WIDTH } from './CONSTANTS/Sizes';
 import Header_image from './COMPONENTS/Header_image';
 import {
   col_primary,
@@ -33,6 +33,11 @@ import {
   col_white,
   col_off_white,
 } from './CONSTANTS/Colors';
+
+import { Provider } from 'react-redux';
+import Store from './REDUX/Store';
+
+
 
 //const BottomTab = createMaterialBottomTabNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -45,9 +50,9 @@ const HeaderBackground = () => {
   return (
     <LinearGradient
       colors={[col_primary, col_secondary]}
-      style={{flex: 1}}
-      start={{x: 0, y: 0}}
-      end={{x: 1, y: 0}}>
+      style={{ flex: 1 }}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 0 }}>
       <StatusBar
         barStyle="light-content"
         translucent={true}
@@ -241,7 +246,7 @@ const Bottom_tab_navigation = () => {
   return (
     <BottomTab.Navigator
       tabBarOptions={{
-        tabStyle: {backgroundColor: col_primary},
+        tabStyle: { backgroundColor: col_primary },
         activeTintColor: col_white,
         inactiveTintColor: col_off_white,
         //keyboardHidesTabBar: true,
@@ -251,7 +256,7 @@ const Bottom_tab_navigation = () => {
         component={All_songs_stack_navigation}
         options={{
           tabBarLabel: s_songs,
-          tabBarIcon: ({color}) => (
+          tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="music"
               color={color}
@@ -265,7 +270,7 @@ const Bottom_tab_navigation = () => {
         component={All_artists_stack_navigation}
         options={{
           tabBarLabel: s_artists,
-          tabBarIcon: ({color}) => (
+          tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="microphone"
               color={color}
@@ -279,7 +284,7 @@ const Bottom_tab_navigation = () => {
         component={Likes_stack_navigation}
         options={{
           tabBarLabel: s_likes,
-          tabBarIcon: ({color}) => (
+          tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="heart"
               color={color}
@@ -293,7 +298,7 @@ const Bottom_tab_navigation = () => {
         component={PlayList_stack_navigation}
         options={{
           tabBarLabel: s_playlists,
-          tabBarIcon: ({color}) => (
+          tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="list-alt"
               color={color}
@@ -308,9 +313,11 @@ const Bottom_tab_navigation = () => {
 
 function App() {
   return (
-    <NavigationContainer>
-      <Bottom_tab_navigation />
-    </NavigationContainer>
+    <Provider store={Store}>
+      <NavigationContainer>
+        <Bottom_tab_navigation />
+      </NavigationContainer>
+    </Provider>
   );
 }
 
