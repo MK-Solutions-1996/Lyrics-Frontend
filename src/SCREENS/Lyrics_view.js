@@ -96,7 +96,7 @@ function Lyrics_view() {
         )
       }
 
-      <ImageBackground style={styles.container} source={im_lyrics_background}>
+      <ImageBackground style={styles.zoomableContainer} source={im_lyrics_background}>
         <LinearGradient
           colors={['rgba(102,126,234,0.7)', 'rgba(118,75,162,0.7)']}
           style={styles.container}
@@ -120,9 +120,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+
   zoomableContainer: {
-    flex: 1,
-    marginBottom: HEIGHT(10)
+    flex: 3,
+
   }
 });
 

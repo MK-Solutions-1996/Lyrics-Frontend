@@ -57,13 +57,15 @@ function Zoomable_view({ lyrics }) {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         backgroundColor: col_white_glass,
         marginHorizontal: WIDTH(20),
         shadowColor: col_black,
         shadowOpacity: 0.5,
         elevation: 5,
         shadowRadius: 5,
-        marginBottom: 20
+        marginBottom: HEIGHT(25)
+
 
     },
     lyrics: {
@@ -80,14 +82,17 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
-        width: 80,
-        height: 50,
+        //width: 80,
+        //height: 50,
         position: 'absolute',
         right: 2,
-        bottom: -25,
+        bottom: HEIGHT(-12),
+        //backgroundColor: 'red',
+        //paddingHorizontal: WIDTH(5)
 
     },
     iconContainer: {
+        marginHorizontal: WIDTH(4),
         backgroundColor: col_secondary,
         borderRadius: 50,
         padding: 7,

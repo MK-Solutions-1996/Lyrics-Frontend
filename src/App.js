@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator, } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
@@ -25,7 +25,7 @@ import {
   s_app_title,
 } from './CONSTANTS/Sinhala';
 
-import { HEADER_HEIGHT, HEIGHT, WIDTH } from './CONSTANTS/Sizes';
+import { HEIGHT, WIDTH } from './CONSTANTS/Sizes';
 import Header_image from './COMPONENTS/Header_image';
 import {
   col_primary,
@@ -44,7 +44,7 @@ const BottomTab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
-const statusBarHeight = StatusBar.currentHeight;
+//const statusBarHeight = StatusBar.currentHeight;
 
 const HeaderBackground = () => {
   return (
@@ -54,7 +54,7 @@ const HeaderBackground = () => {
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 0 }}>
       <StatusBar
-        barStyle="light-content"
+        //barStyle="light-content"
         translucent={true}
         backgroundColor="transparent"
       />
@@ -68,9 +68,9 @@ function All_songs_stack_navigation() {
       screenOptions={{
         //headerShown: false,
         headerBackground: () => <HeaderBackground />,
-        headerStyle: {
-          height: HEADER_HEIGHT,
-        },
+        // headerStyle: {
+        //   height: HEADER_HEIGHT,
+        // },
         headerLeft: () => <Header_image />,
       }}>
       <Stack.Screen
@@ -103,9 +103,9 @@ function All_artists_stack_navigation() {
       screenOptions={{
         //headerShown: false,
         headerBackground: () => <HeaderBackground />,
-        headerStyle: {
-          height: HEADER_HEIGHT,
-        },
+        // headerStyle: {
+        //   height: HEADER_HEIGHT,
+        // },
         headerLeft: () => <Header_image />,
       }}>
       <Stack.Screen
@@ -138,9 +138,9 @@ function Likes_stack_navigation() {
       screenOptions={{
         //headerShown: false,
         headerBackground: () => <HeaderBackground />,
-        headerStyle: {
-          height: HEADER_HEIGHT,
-        },
+        // headerStyle: {
+        //   height: HEADER_HEIGHT,
+        // },
         headerLeft: () => <Header_image />,
       }}>
       <Stack.Screen
@@ -164,9 +164,9 @@ function PlayList_stack_navigation() {
       screenOptions={{
         //headerShown: false,
         headerBackground: () => <HeaderBackground />,
-        headerStyle: {
-          height: HEADER_HEIGHT,
-        },
+        // headerStyle: {
+        //   height: HEADER_HEIGHT,
+        // },
         headerLeft: () => <Header_image />,
       }}>
       <Stack.Screen
@@ -249,6 +249,7 @@ const Bottom_tab_navigation = () => {
         tabStyle: { backgroundColor: col_primary },
         activeTintColor: col_white,
         inactiveTintColor: col_off_white,
+
         //keyboardHidesTabBar: true,
       }}>
       <BottomTab.Screen

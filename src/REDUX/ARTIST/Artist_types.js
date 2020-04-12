@@ -1,0 +1,3 @@
+export const ARTIST_LOAD = 'ARTIST_LOAD';
+export const ARTIST_SUCCESS = 'ARTIST_SUCCESS';
+export const ARTIST_ERROR = 'ARTIST_ERROR';

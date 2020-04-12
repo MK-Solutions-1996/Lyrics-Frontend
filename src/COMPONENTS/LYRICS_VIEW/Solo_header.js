@@ -33,12 +33,16 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Avatar } from 'react-native-elements';
-
 import AudioPlayer from '../Audio_player';
 
 
 
+
 function Solo_header({ artistArray, songObject, goBackFunction, track }) {
+
+    //const HEADER_HEIGHT = useHeaderHeight();
+    //console.log('HHHH:', HEADER_HEIGHT);
+
     const { _id, type, sinhalaTitle, singlishTitle, audio } = songObject;
 
     if (artistArray[0].image.imageAvailability) {
@@ -59,24 +63,31 @@ function Solo_header({ artistArray, songObject, goBackFunction, track }) {
                                 <TouchableOpacity onPress={() => goBackFunction()}>
                                     <Icon name="arrow-circle-left" color={col_off_white} size={WIDTH(30)} style={styles.backIcon} />
                                 </TouchableOpacity>
-                                <View>
-                                    <Text style={styles.sinhalaTitle}>{sinhalaTitle}</Text>
-                                    <Text style={styles.singlishTitle}>{singlishTitle}</Text>
-                                    <Text style={styles.singlishTitle}>{artistArray[0].sinhalaName}</Text>
+                                <View style={styles.titleList}>
+                                    <Text numberOfLines={1} style={styles.sinhalaTitle}>{sinhalaTitle}</Text>
+                                    <Text numberOfLines={1} style={styles.singlishTitle}>{singlishTitle}</Text>
+                                    <Text numberOfLines={1} style={styles.singlishTitle}>{artistArray[0].sinhalaName}</Text>
                                 </View>
                             </View>
+                            <View style={styles.headerTopRightContainer}>
+                                {/* <View style={styles.artistImageContainer}>
+                                    <Image
+                                        style={styles.artistImage}
+                                        source={{ uri: artistArray[0].image.image }}
+                                    />
+                                </View> */}
+                                <Avatar
+                                    rounded
+                                    source={{ uri: artistArray[0].image.image }}
+                                    size={WIDTH(60)}
 
-                            <Avatar
-
-                                rounded
-                                source={{ uri: artistArray[0].image.image }}
-                                size="large"
-                                overlayContainerStyle={{ backgroundColor: col_white }}
-                                placeholderStyle={{ backgroundColor: col_off_white }}
-                                activeOpacity={0.7}
-                            />
+                                    overlayContainerStyle={{ backgroundColor: col_white }}
+                                    placeholderStyle={{ backgroundColor: col_off_white }}
+                                    activeOpacity={0.7}
+                                />
+                            </View>
                         </View>
-                        <View style={styles.audioPlayer}>
+                        <View style={styles.headerBottomContainer}>
                             {
                                 (audio.audioAvailability) ?
                                     (<AudioPlayer track={track} />)
@@ -108,23 +119,31 @@ function Solo_header({ artistArray, songObject, goBackFunction, track }) {
                                 <TouchableOpacity onPress={() => goBackFunction()}>
                                     <Icon name="arrow-circle-left" color={col_off_white} size={WIDTH(30)} style={styles.backIcon} />
                                 </TouchableOpacity>
-                                <View>
-                                    <Text style={styles.sinhalaTitle}>{sinhalaTitle}</Text>
-                                    <Text style={styles.singlishTitle}>{singlishTitle}</Text>
-                                    <Text style={styles.singlishTitle}>{artistArray[0].sinhalaName}</Text>
+                                <View style={styles.titleList}>
+                                    <Text numberOfLines={1} style={styles.sinhalaTitle}>{sinhalaTitle}</Text>
+                                    <Text numberOfLines={1} style={styles.singlishTitle}>{singlishTitle}</Text>
+                                    <Text numberOfLines={1} style={styles.singlishTitle}>{artistArray[0].sinhalaName}</Text>
                                 </View>
                             </View>
+                            <View style={styles.headerTopRightContainer}>
+                                {/* <View style={styles.artistImageContainer}>
+                                    <Image
+                                        style={styles.artistImage}
+                                        source={{ uri: artistArray[0].image.image }}
+                                    />
+                                </View> */}
+                                <Avatar
+                                    rounded
+                                    source={im_default_artist}
+                                    size={WIDTH(60)}
 
-                            <Avatar
-                                rounded
-                                source={im_default_artist}
-                                size="large"
-                                overlayContainerStyle={{ backgroundColor: col_white }}
-                                placeholderStyle={{ backgroundColor: col_off_white }}
-                                activeOpacity={0.7}
-                            />
+                                    overlayContainerStyle={{ backgroundColor: col_white }}
+                                    placeholderStyle={{ backgroundColor: col_off_white }}
+                                    activeOpacity={0.7}
+                                />
+                            </View>
                         </View>
-                        <View style={styles.audioPlayer}>
+                        <View style={styles.headerBottomContainer}>
                             {
                                 (audio.audioAvailability) ?
                                     (<AudioPlayer track={track} />)
@@ -142,67 +161,87 @@ function Solo_header({ artistArray, songObject, goBackFunction, track }) {
 
 
 const styles = StyleSheet.create({
-
     container: {
         flex: 1,
     },
     imageBackground: {
+        flex: 1,
         flexDirection: 'row',
-        height: HEADER_WITH_BACKGROUND_IMAGE_HEIGHT,
         shadowColor: col_black,
         shadowOpacity: 0.9,
         shadowRadius: 2,
         elevation: 5,
         overflow: 'hidden'
     },
-
     headerContainer: {
         flex: 1,
-        justifyContent: 'space-between'
-    },
+        justifyContent: 'space-between',
 
+    },
     headerTopContainer: {
-        flex: 1,
+        flex: 2,
         flexDirection: 'row',
         justifyContent: "space-between",
-        marginTop: STATUS_BAR_HEIGHT,
-        marginHorizontal: WIDTH(10)
+        marginTop: STATUS_BAR_HEIGHT + 5,
+        marginHorizontal: 10,
+
     },
     backAndTitleContent: {
-        flexDirection: 'row'
+        flex: 4,
+        flexDirection: 'row',
     },
-
+    headerTopRightContainer: {
+        flex: 1,
+    },
+    artistImageContainer: {
+        flex: 1,
+        borderRadius: 7,
+        shadowColor: col_black,
+        shadowOpacity: 1,
+        elevation: 5,
+        padding: 3,
+    },
+    artistImage: {
+        flex: 1,
+        borderRadius: 7
+    },
+    titleList: {
+        flex: 1,
+    },
     sinhalaTitle: {
         fontWeight: 'bold',
         color: col_white,
         fontSize: WIDTH(18),
-        paddingLeft: WIDTH(5)
+        paddingLeft: 5
     },
     singlishTitle: {
         color: col_white,
         fontSize: WIDTH(10),
-        paddingLeft: WIDTH(5),
+        paddingLeft: 5,
         textTransform: 'uppercase'
     },
 
-
     backIcon: {
+        flex: 1,
+        marginTop: 5,
         shadowColor: 'black',
         shadowOpacity: 1,
         textShadowRadius: 1,
         textShadowOffset: { width: 1, height: 3 },
     },
 
-    audioPlayer: {
-        marginBottom: HEIGHT(10),
-        alignItems: 'center',
+    headerBottomContainer: {
+        flex: 1,
+        margin: 10,
+        justifyContent: 'flex-end',
+
     },
     audioNotAvailable: {
         flexDirection: 'row',
-        backgroundColor: col_secondary_rgba,
-        width: DEVICE_WIDTH - WIDTH(20),
+        alignItems: 'center',
         justifyContent: 'space-around',
-        paddingVertical: HEIGHT(5),
+        backgroundColor: col_secondary_rgba,
+        paddingVertical: 5,
         borderRadius: 7,
         shadowColor: col_black,
         shadowOpacity: 0.5,
@@ -211,7 +250,9 @@ const styles = StyleSheet.create({
         elevation: 5
     },
     audioNotAvailableText: {
-        color: col_off_white
+        color: col_off_white,
+        fontSize: WIDTH(12)
+
     }
 
 });

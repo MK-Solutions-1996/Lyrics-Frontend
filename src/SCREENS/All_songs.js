@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, FlatList, ProgressBarAndroid } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { HEIGHT, WIDTH } from '../CONSTANTS/Sizes';
+import { HEIGHT, WIDTH, DEVICE_WIDTH, DEVICE_HEIGHT } from '../CONSTANTS/Sizes';
 
 import Song_List from '../COMPONENTS/SONG/Song_list';
 import { test_song_array } from '../TestData';
@@ -11,7 +11,12 @@ import SearchHeader from '../COMPONENTS/SearchHeader';
 import { MusicBarLoader } from 'react-native-indicator';
 import { col_primary } from '../CONSTANTS/Colors';
 
+
 function All_songs() {
+
+
+
+
   const navigation = useNavigation();
   const [searchText, setSearchText] = useState('');
   const [songData, setSongData] = useState(test_song_array);
@@ -72,13 +77,10 @@ const styles = StyleSheet.create({
   },
   loadingContainer: {
     flex: 1,
-
-    // backgroundColor: 'rgba(0,0,0,0.5)',
   },
   loader: {
     flex: 1,
     alignItems: 'center',
-    //justifyContent: 'center',
   },
 });
 

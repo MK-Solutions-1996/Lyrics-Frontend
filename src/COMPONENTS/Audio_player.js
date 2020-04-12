@@ -99,6 +99,7 @@ function Audio_player({ track }) {
     if (!(loadingAudio) & (audioLoadingTimeCounter < 5)) {
         return (
             <View style={styles.container}>
+
                 {
                     (!playState) ? (<TouchableOpacity onPress={() => dispatch(audio_play_action(playingAudio))}>
                         <PlayIcon />
@@ -123,6 +124,7 @@ function Audio_player({ track }) {
                 />
                 <Text style={styles.time}> {currentTimeString} / {durationString}</Text>
             </View>
+
         );
     }
     else {
@@ -152,10 +154,10 @@ function Audio_player({ track }) {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        backgroundColor: col_secondary_rgba,
-        width: DEVICE_WIDTH - WIDTH(20),
+        alignItems: 'center',
         justifyContent: 'space-around',
-        paddingVertical: HEIGHT(5),
+        backgroundColor: col_secondary_rgba,
+        paddingVertical: 5,
         borderRadius: 7,
         shadowColor: col_black,
         shadowOpacity: 0.5,
@@ -163,6 +165,7 @@ const styles = StyleSheet.create({
         shadowRadius: 5,
         elevation: 5
     },
+
     icon: {
         shadowColor: 'black',
         shadowOpacity: 2,
@@ -176,7 +179,8 @@ const styles = StyleSheet.create({
         color: col_white
     },
     tryAgainText: {
-        color: col_off_white
+        color: col_off_white,
+        fontSize: WIDTH(12)
     }
 });
 
