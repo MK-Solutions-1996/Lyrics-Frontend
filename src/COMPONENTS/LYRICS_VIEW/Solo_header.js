@@ -37,12 +37,11 @@ import AudioPlayer from '../Audio_player';
 
 
 
+const BackIcon = () => {
+    return (<Icon name="arrow-circle-left" color={col_off_white} size={HEIGHT(30)} style={styles.backIcon} />);
+}
 
 function Solo_header({ artistArray, songObject, goBackFunction, track }) {
-
-    //const HEADER_HEIGHT = useHeaderHeight();
-    //console.log('HHHH:', HEADER_HEIGHT);
-
     const { _id, type, sinhalaTitle, singlishTitle, audio } = songObject;
 
     if (artistArray[0].image.imageAvailability) {
@@ -61,7 +60,7 @@ function Solo_header({ artistArray, songObject, goBackFunction, track }) {
                         <View style={styles.headerTopContainer}>
                             <View style={styles.backAndTitleContent}>
                                 <TouchableOpacity onPress={() => goBackFunction()}>
-                                    <Icon name="arrow-circle-left" color={col_off_white} size={WIDTH(30)} style={styles.backIcon} />
+                                    <BackIcon />
                                 </TouchableOpacity>
                                 <View style={styles.titleList}>
                                     <Text numberOfLines={1} style={styles.sinhalaTitle}>{sinhalaTitle}</Text>
@@ -70,16 +69,10 @@ function Solo_header({ artistArray, songObject, goBackFunction, track }) {
                                 </View>
                             </View>
                             <View style={styles.headerTopRightContainer}>
-                                {/* <View style={styles.artistImageContainer}>
-                                    <Image
-                                        style={styles.artistImage}
-                                        source={{ uri: artistArray[0].image.image }}
-                                    />
-                                </View> */}
                                 <Avatar
                                     rounded
                                     source={{ uri: artistArray[0].image.image }}
-                                    size={WIDTH(60)}
+                                    size={HEIGHT(60)}
 
                                     overlayContainerStyle={{ backgroundColor: col_white }}
                                     placeholderStyle={{ backgroundColor: col_off_white }}
@@ -117,7 +110,7 @@ function Solo_header({ artistArray, songObject, goBackFunction, track }) {
                         <View style={styles.headerTopContainer}>
                             <View style={styles.backAndTitleContent}>
                                 <TouchableOpacity onPress={() => goBackFunction()}>
-                                    <Icon name="arrow-circle-left" color={col_off_white} size={WIDTH(30)} style={styles.backIcon} />
+                                    <BackIcon />
                                 </TouchableOpacity>
                                 <View style={styles.titleList}>
                                     <Text numberOfLines={1} style={styles.sinhalaTitle}>{sinhalaTitle}</Text>
@@ -126,17 +119,10 @@ function Solo_header({ artistArray, songObject, goBackFunction, track }) {
                                 </View>
                             </View>
                             <View style={styles.headerTopRightContainer}>
-                                {/* <View style={styles.artistImageContainer}>
-                                    <Image
-                                        style={styles.artistImage}
-                                        source={{ uri: artistArray[0].image.image }}
-                                    />
-                                </View> */}
                                 <Avatar
                                     rounded
                                     source={im_default_artist}
-                                    size={WIDTH(60)}
-
+                                    size={HEIGHT(60)}
                                     overlayContainerStyle={{ backgroundColor: col_white }}
                                     placeholderStyle={{ backgroundColor: col_off_white }}
                                     activeOpacity={0.7}
@@ -179,12 +165,11 @@ const styles = StyleSheet.create({
 
     },
     headerTopContainer: {
-        flex: 2,
+        flex: 3,
         flexDirection: 'row',
         justifyContent: "space-between",
-        marginTop: STATUS_BAR_HEIGHT + 5,
-        marginHorizontal: 10,
-
+        marginTop: STATUS_BAR_HEIGHT + HEIGHT(5),
+        marginHorizontal: HEIGHT(10),
     },
     backAndTitleContent: {
         flex: 4,
@@ -192,6 +177,7 @@ const styles = StyleSheet.create({
     },
     headerTopRightContainer: {
         flex: 1,
+
     },
     artistImageContainer: {
         flex: 1,
@@ -199,7 +185,8 @@ const styles = StyleSheet.create({
         shadowColor: col_black,
         shadowOpacity: 1,
         elevation: 5,
-        padding: 3,
+        paddingVertical: HEIGHT(3),
+        paddingHorizontal: WIDTH(3)
     },
     artistImage: {
         flex: 1,
@@ -211,47 +198,47 @@ const styles = StyleSheet.create({
     sinhalaTitle: {
         fontWeight: 'bold',
         color: col_white,
-        fontSize: WIDTH(18),
-        paddingLeft: 5
+        fontSize: HEIGHT(18),
+        paddingLeft: WIDTH(5)
     },
     singlishTitle: {
         color: col_white,
-        fontSize: WIDTH(10),
-        paddingLeft: 5,
+        fontSize: HEIGHT(10),
+        paddingLeft: WIDTH(5),
         textTransform: 'uppercase'
     },
 
     backIcon: {
         flex: 1,
-        marginTop: 5,
+        marginTop: HEIGHT(5),
         shadowColor: 'black',
         shadowOpacity: 1,
         textShadowRadius: 1,
         textShadowOffset: { width: 1, height: 3 },
     },
-
     headerBottomContainer: {
         flex: 1,
-        margin: 10,
+        marginBottom: HEIGHT(10),
+        marginHorizontal: WIDTH(10),
         justifyContent: 'flex-end',
-
     },
     audioNotAvailable: {
+        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
         backgroundColor: col_secondary_rgba,
-        paddingVertical: 5,
-        borderRadius: 7,
+        borderRadius: HEIGHT(7),
         shadowColor: col_black,
         shadowOpacity: 0.5,
         shadowOffset: { width: 4, height: 10 },
         shadowRadius: 5,
-        elevation: 5
+        elevation: 5,
+        paddingVertical: HEIGHT(2)
     },
     audioNotAvailableText: {
         color: col_off_white,
-        fontSize: WIDTH(12)
+        fontSize: HEIGHT(12)
 
     }
 

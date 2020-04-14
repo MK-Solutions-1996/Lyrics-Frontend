@@ -25,7 +25,7 @@ import {
 } from '../REDUX';
 
 
-const iconSize = WIDTH(20);
+const iconSize = HEIGHT(20);
 
 const PlayIcon = () => {
     return <Icon name="play" size={iconSize} color={col_off_white} style={styles.icon} />
@@ -50,7 +50,7 @@ function Audio_player({ track }) {
 
     useEffect(() => {
         dispatch(initialize_audio_action(track));
-    }, [])
+    }, [track])
 
 
 
@@ -81,7 +81,7 @@ function Audio_player({ track }) {
         return () => {
             clearInterval(loadingAudioListner);
         }
-    }, [audioLoadingTimeCounter]);
+    }, [audioLoadingTimeCounter, loadingAudio]);
 
 
     const getAudioTimeString = (seconds) => {
@@ -119,8 +119,6 @@ function Audio_player({ track }) {
                     maximumTrackTintColor={col_white}
                     onValueChange={(time) => dispatch(on_slider_editing_action(playingAudio, time))}
                     value={sliderCurrentTime}
-
-
                 />
                 <Text style={styles.time}> {currentTimeString} / {durationString}</Text>
             </View>
@@ -130,11 +128,12 @@ function Audio_player({ track }) {
     else {
         if (audioLoadingTimeCounter === 5) {
             return (
-                <TouchableOpacity onPress={() => dispatch(audio_reload_action(playingAudio))}>
-                    <View style={styles.container}>
+                <View style={styles.container}>
+                    <TouchableOpacity onPress={() => dispatch(audio_reload_action(playingAudio))}>
                         <Text style={styles.tryAgainText}>{s_try_again_for_the_audio}</Text>
-                    </View>
-                </TouchableOpacity>
+                    </TouchableOpacity>
+                </View>
+
             )
         }
         else {
@@ -153,17 +152,19 @@ function Audio_player({ track }) {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
         backgroundColor: col_secondary_rgba,
-        paddingVertical: 5,
-        borderRadius: 7,
+        borderRadius: HEIGHT(7),
         shadowColor: col_black,
         shadowOpacity: 0.5,
         shadowOffset: { width: 4, height: 10 },
         shadowRadius: 5,
-        elevation: 5
+        elevation: 5,
+        paddingVertical: HEIGHT(2)
+
     },
 
     icon: {
@@ -173,14 +174,15 @@ const styles = StyleSheet.create({
         textShadowOffset: { width: 1, height: 4 },
     },
     slider: {
-        width: DEVICE_WIDTH / 2
+        width: DEVICE_WIDTH / 2,
     },
     time: {
-        color: col_white
+        color: col_white,
+        fontSize: WIDTH(12)
     },
     tryAgainText: {
         color: col_off_white,
-        fontSize: WIDTH(12)
+        fontSize: HEIGHT(12)
     }
 });
 

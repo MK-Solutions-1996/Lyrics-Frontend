@@ -39,8 +39,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { release_audio_action } from '../REDUX';
 import SoloHeader from '../COMPONENTS/LYRICS_VIEW/Solo_header';
 import DuetHeader from '../COMPONENTS/LYRICS_VIEW/Duet_header';
+import GroupHeader from '../COMPONENTS/LYRICS_VIEW/Group_header';
 
 import ZoomableView from '../COMPONENTS/LYRICS_VIEW/Zoomable_view';
+import Group_header from '../COMPONENTS/LYRICS_VIEW/Group_header';
 
 
 
@@ -51,6 +53,7 @@ function Lyrics_view() {
   const route = useRoute();
   const navigation = useNavigation();
   const dispatch = useDispatch()
+
 
   const { songObject, artistArray } = route.params;
   const { _id, type, sinhalaTitle, singlishTitle, audio, song } = songObject;
@@ -75,7 +78,17 @@ function Lyrics_view() {
         return true;
       });
     }
-  }, []);
+  });
+
+
+
+  // useEffect(() => {
+  //   const tabPressHandler = navigation.addListener('tabPress', e => {
+  //     e.preventDefault(); // dissaple default press of the bottom tab
+  //   });
+
+  //   return tabPressHandler;
+  // }, [navigation]);
 
 
   const goBackFunction = () => {
@@ -91,8 +104,10 @@ function Lyrics_view() {
       {
         (type === 'Solo') ? (
           <SoloHeader artistArray={artistArray} songObject={songObject} goBackFunction={goBackFunction} track={tempTrack} />
-        ) : (type === 'Duet') && (
+        ) : (type === 'Duet') ? (
           <DuetHeader artistArray={artistArray} songObject={songObject} goBackFunction={goBackFunction} track={tempTrack} />
+        ) : (type === 'Group') && (
+          <GroupHeader artistArray={artistArray} songObject={songObject} goBackFunction={goBackFunction} track={tempTrack} />
         )
       }
 

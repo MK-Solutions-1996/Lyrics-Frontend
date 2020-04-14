@@ -19,7 +19,7 @@ import {
     HEADER_WITH_BACKGROUND_IMAGE_HEIGHT
 } from '../../CONSTANTS/Sizes';
 
-import { s_sorry_audio_not_availabale_for_this_song } from '../../CONSTANTS/Sinhala';
+import { s_sorry_audio_not_availabale_for_this_song, s_group_sing } from '../../CONSTANTS/Sinhala';
 import { im_default_artist } from '../../CONSTANTS/Imports';
 
 
@@ -33,9 +33,7 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Avatar } from 'react-native-elements';
-
 import AudioPlayer from '../Audio_player';
-
 
 
 
@@ -43,9 +41,8 @@ const BackIcon = () => {
     return (<Icon name="arrow-circle-left" color={col_off_white} size={HEIGHT(30)} style={styles.backIcon} />);
 }
 
-function Duet_header({ artistArray, songObject, goBackFunction, track }) {
+function Group_header({ artistArray, songObject, goBackFunction, track }) {
     const { _id, type, sinhalaTitle, singlishTitle, audio } = songObject;
-
     return (
         <ImageBackground
             resizeMode="stretch"
@@ -66,8 +63,8 @@ function Duet_header({ artistArray, songObject, goBackFunction, track }) {
                             <View style={styles.titleList}>
                                 <Text numberOfLines={1} style={styles.sinhalaTitle}>{sinhalaTitle}</Text>
                                 <Text numberOfLines={1} style={styles.singlishTitle}>{singlishTitle}</Text>
-                                <Text numberOfLines={1} style={styles.singlishTitle}>{artistArray[0].sinhalaName}</Text>
-                                <Text numberOfLines={1} style={styles.singlishTitle}>{artistArray[1].sinhalaName}</Text>
+                                <Text numberOfLines={1} style={styles.singlishTitle}>{s_group_sing}</Text>
+
                             </View>
                         </View>
                         <View style={styles.headerTopRightContainer}>
@@ -93,8 +90,7 @@ function Duet_header({ artistArray, songObject, goBackFunction, track }) {
                 </View>
             </LinearGradient>
         </ImageBackground>
-    );
-
+    )
 }
 
 
@@ -170,7 +166,7 @@ const styles = StyleSheet.create({
     },
     headerBottomContainer: {
         flex: 1,
-        marginBottom: HEIGHT(7),
+        marginBottom: HEIGHT(10),
         marginHorizontal: WIDTH(10),
         justifyContent: 'flex-end',
     },
@@ -196,5 +192,4 @@ const styles = StyleSheet.create({
 
 });
 
-
-export default Duet_header;
+export default Group_header

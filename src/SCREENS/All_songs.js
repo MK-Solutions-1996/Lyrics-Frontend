@@ -1,28 +1,22 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, FlatList, ProgressBarAndroid } from 'react-native';
+import { View, StyleSheet, FlatList, ProgressBarAndroid, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { HEIGHT, WIDTH, DEVICE_WIDTH, DEVICE_HEIGHT } from '../CONSTANTS/Sizes';
+import SongList from '../COMPONENTS/ALL_SONGS/Song_list';
 
-import Song_List from '../COMPONENTS/SONG/Song_list';
 import { test_song_array } from '../TestData';
-
 import SearchHeader from '../COMPONENTS/SearchHeader';
-
 import { MusicBarLoader } from 'react-native-indicator';
 import { col_primary } from '../CONSTANTS/Colors';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 
 function All_songs() {
 
-
-
-
-  const navigation = useNavigation();
   const [searchText, setSearchText] = useState('');
   const [songData, setSongData] = useState(test_song_array);
 
   const songs_loading = false;
-
   const searchFilter = (text) => {
     setSearchText(text);
     const newData = test_song_array.filter((item) => {
@@ -49,22 +43,35 @@ function All_songs() {
   }
 
   return (
-    <View style={styles.container}>
-      <SearchHeader
-        searchFilter={searchFilter}
-        searchText={searchText}
-        editable={true}
-      />
+    <KeyboardAvoidingView
+      enabled
+      style={styles.container}
+      behavior="height"
+    //behavior="padding"
+    //enableResetScrollToCoords={true}
+
+    //scrollEnabled={false}
+    >
+      {/* <View style={styles.container}> */}
+      <View style={styles.headerContainer}>
+        <SearchHeader
+          searchFilter={searchFilter}
+          searchText={searchText}
+          editable={true}
+        />
+      </View>
       <View style={styles.listContainer}>
         <FlatList
+          scrollEnabled={true}
           data={songData}
           renderItem={({ item, index }) => (
-            <Song_List key={item._id} songObject={item} />
+            <SongList key={item._id} songObject={item} />
           )}
           keyExtractor={(item) => item._id}
         />
       </View>
-    </View>
+      {/* </View> */}
+    </KeyboardAvoidingView>
   );
 }
 
@@ -72,8 +79,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  headerContainer: {
+    flex: 1,
+    //backgroundColor: 'red'
+  },
   listContainer: {
+    flex: 8,
     marginTop: HEIGHT(5),
+
   },
   loadingContainer: {
     flex: 1,

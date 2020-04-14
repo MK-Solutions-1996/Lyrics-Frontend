@@ -1,12 +1,13 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { createBottomTabNavigator, } from '@react-navigation/bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
 import MaterialCommunityIcons from 'react-native-vector-icons/FontAwesome';
+
+
 
 import All_songs_screen from './SCREENS/All_songs';
 import All_artists_screen from './SCREENS/All_artists';
@@ -15,6 +16,9 @@ import Playlist_screen from './SCREENS/Playlist';
 import Others_screen from './SCREENS/Others';
 import Single_artist_screen from './SCREENS/Single_artist';
 import Lyrics_view_screen from './SCREENS/Lyrics_view';
+
+
+
 
 import {
   s_songs,
@@ -38,13 +42,15 @@ import { Provider } from 'react-redux';
 import Store from './REDUX/Store';
 
 
+import { useSelector, useDispatch } from 'react-redux';
+import { audio_pause_action } from './REDUX';
 
-//const BottomTab = createMaterialBottomTabNavigator();
-const BottomTab = createBottomTabNavigator();
+
+const BottomTab = createMaterialBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
-//const statusBarHeight = StatusBar.currentHeight;
+
 
 const HeaderBackground = () => {
   return (
@@ -54,7 +60,6 @@ const HeaderBackground = () => {
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 0 }}>
       <StatusBar
-        //barStyle="light-content"
         translucent={true}
         backgroundColor="transparent"
       />
@@ -66,11 +71,7 @@ function All_songs_stack_navigation() {
   return (
     <Stack.Navigator
       screenOptions={{
-        //headerShown: false,
         headerBackground: () => <HeaderBackground />,
-        // headerStyle: {
-        //   height: HEADER_HEIGHT,
-        // },
         headerLeft: () => <Header_image />,
       }}>
       <Stack.Screen
@@ -82,6 +83,7 @@ function All_songs_stack_navigation() {
           headerTintColor: '#fff',
           headerTitleStyle: {
             fontWeight: 'bold',
+            fontSize: WIDTH(18)
           },
         }}
       />
@@ -101,11 +103,7 @@ function All_artists_stack_navigation() {
   return (
     <Stack.Navigator
       screenOptions={{
-        //headerShown: false,
         headerBackground: () => <HeaderBackground />,
-        // headerStyle: {
-        //   height: HEADER_HEIGHT,
-        // },
         headerLeft: () => <Header_image />,
       }}>
       <Stack.Screen
@@ -117,7 +115,9 @@ function All_artists_stack_navigation() {
           headerTintColor: '#fff',
           headerTitleStyle: {
             fontWeight: 'bold',
+            fontSize: WIDTH(18)
           },
+
         }}
       />
       <Stack.Screen
@@ -136,11 +136,7 @@ function Likes_stack_navigation() {
   return (
     <Stack.Navigator
       screenOptions={{
-        //headerShown: false,
         headerBackground: () => <HeaderBackground />,
-        // headerStyle: {
-        //   height: HEADER_HEIGHT,
-        // },
         headerLeft: () => <Header_image />,
       }}>
       <Stack.Screen
@@ -152,6 +148,7 @@ function Likes_stack_navigation() {
           headerTintColor: '#fff',
           headerTitleStyle: {
             fontWeight: 'bold',
+            fontSize: WIDTH(18)
           },
         }}
       />
@@ -162,11 +159,7 @@ function PlayList_stack_navigation() {
   return (
     <Stack.Navigator
       screenOptions={{
-        //headerShown: false,
         headerBackground: () => <HeaderBackground />,
-        // headerStyle: {
-        //   height: HEADER_HEIGHT,
-        // },
         headerLeft: () => <Header_image />,
       }}>
       <Stack.Screen
@@ -178,6 +171,7 @@ function PlayList_stack_navigation() {
           headerTintColor: '#fff',
           headerTitleStyle: {
             fontWeight: 'bold',
+            fontSize: WIDTH(18)
           },
         }}
       />
@@ -185,73 +179,28 @@ function PlayList_stack_navigation() {
   );
 }
 
-// function Others_top_tab_navigation() {
-//   return (
-//     <TopTab.Navigator
-//       swipeEnabled={false}
-//       tabBarOptions={{
-//         activeTintColor: '#fff',
-//         indicatorStyle: {
-//           backgroundColor: 'transparent',
-//         },
-//         //labelStyle: {fontSize: 12},
-//         //tabStyle: {height: HEADER_HEIGH},
-//         style: {
-//           backgroundColor: 'transparent',
-//           position: 'absolute',
-//           left: 0,
-//           right: 0,
-//         },
-//       }}>
-//       <TopTab.Screen name={s_likes} component={Likes_screen} />
-//       <TopTab.Screen name={s_playlists} component={Playlist_screen} />
-//     </TopTab.Navigator>
-//   );
-// }
-
-// function others_stack_navigation() {
-//   return (
-//     <Stack.Navigator
-//       screenOptions={{
-//         //headerShown: false,
-//         headerBackground: () => <HeaderBackground />,
-//         headerStyle: {
-//           height: HEADER_HEIGHT,
-//         },
-//         headerLeft: () => <Header_image />,
-//       }}>
-//       <Stack.Screen
-//         name={s_app_title}
-//         component={Others_top_tab_navigation}
-//         options={{
-//           ...TransitionPresets.SlideFromRightIOS,
-//           headerTintColor: '#fff',
-//           headerTitleStyle: {
-//             fontWeight: 'bold',
-//           },
-//           headerStyle: {
-//             //height: 160, // Specify the height of your custom header
-//             //position: 'absolute',
-//           },
-//         }}
-//       />
-//     </Stack.Navigator>
-//   );
-// }
 
 // modal transition ...TransitionPresets.SlideFromRightIOS,.ModalPresentationIOS
 // Transparent modals => search for "Transparent modals"
 
+
+
+
+
 const Bottom_tab_navigation = () => {
+  const dispatch = useDispatch();
+  const audio_state = useSelector(state => state.audio_reducer);
+  const { playingAudio, } = audio_state;
+
   return (
     <BottomTab.Navigator
-      tabBarOptions={{
-        tabStyle: { backgroundColor: col_primary },
-        activeTintColor: col_white,
-        inactiveTintColor: col_off_white,
+      barStyle={{ backgroundColor: col_primary }}
+      shifting={false}
+      activeColor={col_white}
+      inactiveColor={col_off_white}
 
-        //keyboardHidesTabBar: true,
-      }}>
+
+    >
       <BottomTab.Screen
         name="All_songs"
         component={All_songs_stack_navigation}
@@ -265,6 +214,15 @@ const Bottom_tab_navigation = () => {
             />
           ),
         }}
+        listeners={({ navigation, route }) => ({
+          tabPress: e => {
+            if (playingAudio) {
+              e.preventDefault();
+              //dispatch(audio_pause_action(playingAudio));
+            }
+            navigation.navigate('All_songs');
+          }
+        })}
       />
       <BottomTab.Screen
         name="All_artists"
@@ -279,6 +237,15 @@ const Bottom_tab_navigation = () => {
             />
           ),
         }}
+        listeners={({ navigation, route }) => ({
+          tabPress: e => {
+            if (playingAudio) {
+              e.preventDefault();
+              dispatch(audio_pause_action(playingAudio));
+            }
+            navigation.navigate('All_artists');
+          }
+        })}
       />
       <BottomTab.Screen
         name="Likes"
@@ -293,6 +260,15 @@ const Bottom_tab_navigation = () => {
             />
           ),
         }}
+        listeners={({ navigation, route }) => ({
+          tabPress: e => {
+            if (playingAudio) {
+              e.preventDefault();
+              dispatch(audio_pause_action(playingAudio));
+            }
+            navigation.navigate('Likes');
+          }
+        })}
       />
       <BottomTab.Screen
         name="Playlist"
@@ -307,10 +283,21 @@ const Bottom_tab_navigation = () => {
             />
           ),
         }}
+        listeners={({ navigation, route }) => ({
+          tabPress: e => {
+            if (playingAudio) {
+              e.preventDefault();
+              dispatch(audio_pause_action(playingAudio));
+            }
+            navigation.navigate('Playlist');
+          }
+        })}
       />
     </BottomTab.Navigator>
   );
 };
+
+
 
 function App() {
   return (

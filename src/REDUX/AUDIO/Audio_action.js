@@ -9,7 +9,8 @@ import {
     ON_SLIDER_EDITING,
     SET_AUDIO_LOADING_TIME_COUNTER,
     AUDIO_RELOAD,
-    SET_SLIDER_CURRENT_TIME
+    SET_SLIDER_CURRENT_TIME,
+
 } from './Audio_types';
 import Audio from 'react-native-sound';
 
@@ -88,6 +89,12 @@ const audio_reload = () => {
     }
 }
 
+
+const audio_tab_navigation = () => {
+    return {
+        type: AUDIO_TAB_NAVIGATION
+    }
+}
 
 
 
@@ -183,5 +190,7 @@ export const audio_reload_action = (playingAudio) => {
         }
     }
 }
+
+
 
 

@@ -37,67 +37,71 @@ function Song_list({ songObject }) {
         })
       }>
       <View style={styles.container}>
-        {type === 'Solo' ? (
-          artistArray[0].image.imageAvailability ? (
-            <Avatar
-              rounded
-              source={{ uri: artistArray[0].image.image }}
-              size="large"
-              overlayContainerStyle={{ backgroundColor: col_white }}
-              placeholderStyle={{ backgroundColor: col_off_white }}
-              activeOpacity={0.7}
-            />
-          ) : (
+        <View style={styles.avatarConainer}>
+          {type === 'Solo' ? (
+            artistArray[0].image.imageAvailability ? (
               <Avatar
                 rounded
-                source={im_default_artist}
-                size="large"
+                source={{ uri: artistArray[0].image.image }}
+                size={HEIGHT(60)}
                 overlayContainerStyle={{ backgroundColor: col_white }}
                 placeholderStyle={{ backgroundColor: col_off_white }}
                 activeOpacity={0.7}
               />
-            )
-        ) : type === 'Duet' ? (
-          <Avatar
-            rounded
-            source={im_default_artist}
-            size="large"
-            overlayContainerStyle={{ backgroundColor: col_white }}
-            placeholderStyle={{ backgroundColor: col_off_white }}
-            activeOpacity={0.7}
-          />
-        ) : (
-              type === 'Group' && (
+            ) : (
                 <Avatar
                   rounded
                   source={im_default_artist}
-                  size="large"
+                  size={HEIGHT(60)}
                   overlayContainerStyle={{ backgroundColor: col_white }}
                   placeholderStyle={{ backgroundColor: col_off_white }}
                   activeOpacity={0.7}
                 />
               )
-            )}
-        <View style={styles.content}>
-          <Text style={styles.sinhalaTitle}>{sinhalaTitle}​</Text>
-          <Text style={styles.singlishTitle}>{singlishTitle}</Text>
-          {type === 'Solo' ? (
-            <Text style={styles.artistName}>{artistArray[0].sinhalaName}</Text>
           ) : type === 'Duet' ? (
-            <View style={{ flexDirection: 'row' }}>
-              {artistArray.map((data, index) => (
-                <Text style={styles.artistName}>
-                  {index === 0
-                    ? `${data.sinhalaName} ${s_and} `
-                    : data.sinhalaName}
-                </Text>
-              ))}
-            </View>
+            <Avatar
+              rounded
+              source={im_default_artist}
+              size={HEIGHT(60)}
+              overlayContainerStyle={{ backgroundColor: col_white }}
+              placeholderStyle={{ backgroundColor: col_off_white }}
+              activeOpacity={0.7}
+            />
           ) : (
                 type === 'Group' && (
-                  <Text style={styles.singlishTitle}>{s_group_sing}</Text>
+                  <Avatar
+                    rounded
+                    source={im_default_artist}
+                    size={HEIGHT(60)}
+                    overlayContainerStyle={{ backgroundColor: col_white }}
+                    placeholderStyle={{ backgroundColor: col_off_white }}
+                    activeOpacity={0.7}
+                  />
                 )
               )}
+        </View>
+        <View style={styles.titleContainer}>
+          <View style={styles.content}>
+            <Text numberOfLines={1} style={styles.sinhalaTitle}>{sinhalaTitle}​</Text>
+            <Text numberOfLines={1} style={styles.singlishTitle}>{singlishTitle}</Text>
+            {type === 'Solo' ? (
+              <Text numberOfLines={1} style={styles.artistName}>{artistArray[0].sinhalaName}</Text>
+            ) : type === 'Duet' ? (
+              <View numberOfLines={1} style={{ flexDirection: 'row' }}>
+                {artistArray.map((data, index) => (
+                  <Text numberOfLines={1} style={styles.artistName}>
+                    {index === 0
+                      ? `${data.sinhalaName} ${s_and} `
+                      : data.sinhalaName}
+                  </Text>
+                ))}
+              </View>
+            ) : (
+                  type === 'Group' && (
+                    <Text style={styles.singlishTitle}>{s_group_sing}</Text>
+                  )
+                )}
+          </View>
         </View>
       </View>
     </TouchableOpacity>
@@ -106,27 +110,37 @@ function Song_list({ songObject }) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     marginHorizontal: WIDTH(10),
     marginBottom: HEIGHT(5),
     flexDirection: 'row',
     alignItems: 'center',
-    //justifyContent: 'center',
     backgroundColor: col_white,
-    //height: verticalScale(170),
-    //shadowOffset: {width: 10, height: 10},
     shadowColor: col_black,
     shadowOpacity: 5,
     elevation: 5,
-    paddingHorizontal: WIDTH(5),
+    //paddingHorizontal: WIDTH(5),
     paddingVertical: WIDTH(5),
     borderRadius: 7,
     overflow: 'hidden',
+  },
+
+  avatarConainer: {
+    flex: 1,
+
+    alignItems: 'center'
+  },
+
+  titleContainer: {
+    flex: 4,
+
   },
   content: {
     marginLeft: WIDTH(5),
   },
   sinhalaTitle: {
     fontWeight: 'bold',
+    fontSize: WIDTH(12)
   },
   singlishTitle: {
     fontSize: WIDTH(10),

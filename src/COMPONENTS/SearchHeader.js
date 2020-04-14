@@ -15,60 +15,76 @@ import {
   HEIGHT,
   WIDTH,
 } from '../CONSTANTS/Sizes';
-import { useHeaderHeight } from '@react-navigation/stack';
+
 
 
 
 
 function SearchHeader({ searchFilter, searchText, editable }) {
-  const HEADER_HEIGHT = useHeaderHeight();
   return (
+
     <LinearGradient
       colors={[col_primary, col_secondary]}
-      style={{ ...styles.gradient, height: HEADER_HEIGHT - STATUS_BAR_HEIGHT }}
+      style={{ ...styles.container, backgroundColor: 'blue' }}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 0 }}>
       <View style={styles.searchContainer}>
-        <Icon name="search" color={col_off_white} size={HEIGHT(18)} />
-        <TextInput
-          editable={editable}
-          selectionColor={'red'}
-          style={styles.inputSearch}
-          placeholder={s_search}
-          placeholderTextColor={col_off_white}
-          onChangeText={(text) => searchFilter(text)}
-          value={searchText}
-        />
+        <View style={styles.iconContainer}>
+          <Icon name="search" color={col_off_white} size={HEIGHT(18)} />
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            editable={editable}
+            selectionColor={'red'}
+            style={styles.inputSearch}
+            placeholder={s_search}
+            placeholderTextColor={col_off_white}
+            onChangeText={(text) => searchFilter(text)}
+            value={searchText}
+          />
+        </View>
       </View>
     </LinearGradient>
+
+
   );
 }
 
 const styles = StyleSheet.create({
-  gradient: {
+  container: {
+    flex: 1,
     alignItems: 'center',
-    justifyContent: 'flex-end',
-    //height: HEADER_HEIGHT,
+
   },
 
   searchContainer: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    marginHorizontal: WIDTH(10),
+    // borderColor: col_off_white,
+    // borderBottomWidth: WIDTH(1),
+
+
+  },
+
+  iconContainer: {
+    flex: 1,
+    alignItems: 'flex-end'
+  },
+
+  inputContainer: {
+    flex: 4,
     justifyContent: 'center',
-    width: WIDTH(250),
-    borderBottomWidth: WIDTH(1),
-    borderColor: '#fff',
-    marginBottom: HEIGHT(3),
   },
 
   inputSearch: {
-    flex: 1,
-    justifyContent: 'center',
+    //flex: 1,
     color: col_white,
     letterSpacing: WIDTH(1),
+    fontSize: WIDTH(12),
+    height: HEIGHT(50),
 
-    //borderRadius: 7,
   },
 });
 
