@@ -43,7 +43,7 @@ const BackIcon = () => {
     return (<Icon name="arrow-circle-left" color={col_off_white} size={HEIGHT(30)} style={styles.backIcon} />);
 }
 
-function Duet_header({ artistArray, songObject, goBackFunction, track }) {
+function Duet_header({ artistArray, songObject, goBackFunction }) {
     const { _id, type, sinhalaTitle, singlishTitle, audio } = songObject;
 
     return (
@@ -84,7 +84,7 @@ function Duet_header({ artistArray, songObject, goBackFunction, track }) {
                     <View style={styles.headerBottomContainer}>
                         {
                             (audio.audioAvailability) ?
-                                (<AudioPlayer track={track} />)
+                                (<AudioPlayer track={audio.audio} />)
                                 : (<View style={styles.audioNotAvailable}>
                                     <Text style={styles.audioNotAvailableText}>{s_sorry_audio_not_availabale_for_this_song}</Text>
                                 </View>)

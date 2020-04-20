@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Image, ImageBackground, TouchableNativeFeedback } from 'react-native';
 import TestImage from '../../ASSETS/IMAGES/sanuka.jpg';
 import { Avatar } from 'react-native-elements';
 import { HEIGHT, WIDTH, DEVICE_WIDTH, DEVICE_HEIGHT } from '../../CONSTANTS/Sizes';
@@ -8,39 +8,45 @@ import { s_and, s_group_sing } from '../../CONSTANTS/Sinhala';
 import { useNavigation } from '@react-navigation/native';
 
 import { test_artist_array } from '../../TestData';
-import { im_default_artist, im_logo } from '../../CONSTANTS/Imports';
+import { im_default_artist, im_loading } from '../../CONSTANTS/Imports';
+
+import { useSelector } from 'react-redux';
 
 function Artist_list({ artistObject }) {
 
-    const test_url = 'https://song.sgp1.cdn.digitaloceanspaces.com/image/artist/2019/03/534.jpg';
-    // const test_sinhalaName = 'සනුක වික්‍රමසිංහ';
-    // const test_singlishname = 'Sanuka Wikramasingha';
-
+    const navigation = useNavigation();
     const { sinhalaName, singlishName, image } = artistObject;
+
+
+
     return (
-        <View style={styles.conatiner}>
-            <View style={styles.imageContainer}>
-                {
-                    (image.imageAvailability) ? (
-                        <Image
-                            resizeMode='stretch'
-                            style={styles.image}
-                            source={{ uri: image.image }}
-                        />
-                    ) : (
+        <TouchableNativeFeedback onPress={() => navigation.navigate('Single_artist', { artistObject })}>
+            <View style={styles.conatiner}>
+                <ImageBackground
+                    source={im_loading}
+                    style={styles.imageContainer}>
+                    {
+                        (image.imageAvailability) ? (
                             <Image
-                                resizeMode='cover'
+                                resizeMode='stretch'
                                 style={styles.image}
-                                source={im_default_artist}
+                                source={{ uri: image.image }}
                             />
-                        )
-                }
+                        ) : (
+                                <Image
+                                    resizeMode='cover'
+                                    style={styles.image}
+                                    source={im_default_artist}
+                                />
+                            )
+                    }
+                </ImageBackground>
+                <View style={styles.nameContainer}>
+                    <Text numberOfLines={1} style={styles.sinhalaName}>{sinhalaName}</Text>
+                    <Text numberOfLines={1} style={styles.singlishName}>{singlishName}</Text>
+                </View>
             </View>
-            <View style={styles.nameContainer}>
-                <Text numberOfLines={1} style={styles.sinhalaName}>{sinhalaName}</Text>
-                <Text numberOfLines={1} style={styles.singlishName}>{singlishName}</Text>
-            </View>
-        </View>
+        </TouchableNativeFeedback>
     )
 }
 

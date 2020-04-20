@@ -37,14 +37,14 @@ import { s_other_songs } from '../CONSTANTS/Sinhala';
 import AudioPlayer from '../COMPONENTS/Audio_player';
 import { useSelector, useDispatch } from 'react-redux';
 import { release_audio_action } from '../REDUX';
-import SoloHeader from '../COMPONENTS/LYRICS_VIEW/Solo_header';
-import DuetHeader from '../COMPONENTS/LYRICS_VIEW/Duet_header';
-import GroupHeader from '../COMPONENTS/LYRICS_VIEW/Group_header';
+
 
 import ZoomableView from '../COMPONENTS/LYRICS_VIEW/Zoomable_view';
 import Group_header from '../COMPONENTS/LYRICS_VIEW/Group_header';
 
 import useBackButton from '../HOOKS/useBackButton';
+import Solo_header from '../COMPONENTS/LYRICS_VIEW/Solo_header';
+import Duet_header from '../COMPONENTS/LYRICS_VIEW/Duet_header';
 
 
 function Lyrics_view() {
@@ -60,7 +60,7 @@ function Lyrics_view() {
   const audio_state = useSelector(state => state.audio_reducer);
   const { playingAudio } = audio_state;
 
-  const tempTrack = 'http://topbadu.net/sinhala_mp3/Seekers_Sansara_Sihinaye.mp3';
+  //const tempTrack = 'http://topbadu.net/sinhala_mp3/Seekers_Sansara_Sihinaye.mp3';
 
 
   const goBackFunction = () => {
@@ -73,16 +73,16 @@ function Lyrics_view() {
 
 
 
+
   return (
     <View style={styles.container}>
-
       {
         (type === 'Solo') ? (
-          <SoloHeader artistArray={artistArray} songObject={songObject} goBackFunction={goBackFunction} track={tempTrack} />
+          <Solo_header artistArray={artistArray} songObject={songObject} goBackFunction={goBackFunction} />
         ) : (type === 'Duet') ? (
-          <DuetHeader artistArray={artistArray} songObject={songObject} goBackFunction={goBackFunction} track={tempTrack} />
+          <Duet_header artistArray={artistArray} songObject={songObject} goBackFunction={goBackFunction} />
         ) : (type === 'Group') && (
-          <GroupHeader artistArray={artistArray} songObject={songObject} goBackFunction={goBackFunction} track={tempTrack} />
+          <Group_header artistArray={artistArray} songObject={songObject} goBackFunction={goBackFunction} />
         )
       }
 

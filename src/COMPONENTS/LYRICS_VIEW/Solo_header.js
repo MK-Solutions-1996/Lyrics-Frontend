@@ -41,8 +41,12 @@ const BackIcon = () => {
     return (<Icon name="arrow-circle-left" color={col_off_white} size={HEIGHT(30)} style={styles.backIcon} />);
 }
 
-function Solo_header({ artistArray, songObject, goBackFunction, track }) {
+function Solo_header({ artistArray, songObject, goBackFunction }) {
     const { _id, type, sinhalaTitle, singlishTitle, audio } = songObject;
+
+
+    console.log('audio :', audio.audio);
+
 
     if (artistArray[0].image.imageAvailability) {
         return (
@@ -73,7 +77,6 @@ function Solo_header({ artistArray, songObject, goBackFunction, track }) {
                                     rounded
                                     source={{ uri: artistArray[0].image.image }}
                                     size={HEIGHT(60)}
-
                                     overlayContainerStyle={{ backgroundColor: col_white }}
                                     placeholderStyle={{ backgroundColor: col_off_white }}
                                     activeOpacity={0.7}
@@ -83,7 +86,7 @@ function Solo_header({ artistArray, songObject, goBackFunction, track }) {
                         <View style={styles.headerBottomContainer}>
                             {
                                 (audio.audioAvailability) ?
-                                    (<AudioPlayer track={track} />)
+                                    (<AudioPlayer track={audio.audio} />)
                                     : (<View style={styles.audioNotAvailable}>
                                         <Text style={styles.audioNotAvailableText}>{s_sorry_audio_not_availabale_for_this_song}</Text>
                                     </View>)
@@ -132,7 +135,7 @@ function Solo_header({ artistArray, songObject, goBackFunction, track }) {
                         <View style={styles.headerBottomContainer}>
                             {
                                 (audio.audioAvailability) ?
-                                    (<AudioPlayer track={track} />)
+                                    (<AudioPlayer track={audio.audio} />)
                                     : (<View style={styles.audioNotAvailable}>
                                         <Text style={styles.audioNotAvailableText}>{s_sorry_audio_not_availabale_for_this_song}</Text>
                                     </View>)

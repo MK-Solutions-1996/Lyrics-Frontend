@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, FlatList, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import SearchHeader from '../COMPONENTS/SearchHeader';
-import { MusicBarLoader } from 'react-native-indicator';
+import { LineDotsLoader } from 'react-native-indicator';
 import { col_primary } from '../CONSTANTS/Colors'
 import { WIDTH, HEIGHT, DEVICE_WIDTH } from '../CONSTANTS/Sizes'
 import Artist_list from '../COMPONENTS/ALL_ARTISTS/Artist_list';
@@ -47,10 +47,11 @@ function All_artists() {
       <View style={styles.container}>
         <SearchHeader editable={false} />
         <View style={styles.loader}>
-          <MusicBarLoader
-            barHeight={HEIGHT(40)}
-            betweenSpace={WIDTH(10)}
+          <LineDotsLoader
+            size={WIDTH(5)}
             color={col_primary}
+            dotsNumer={5}
+            betweenSpace={WIDTH(5)}
           />
         </View>
       </View>

@@ -6,7 +6,7 @@ import SongList from '../COMPONENTS/ALL_SONGS/Song_list';
 
 import { test_song_array } from '../TestData';
 import SearchHeader from '../COMPONENTS/SearchHeader';
-import { MusicBarLoader } from 'react-native-indicator';
+import { LineDotsLoader } from 'react-native-indicator';
 import { col_primary } from '../CONSTANTS/Colors';
 
 
@@ -59,10 +59,11 @@ function All_songs() {
       <View style={styles.container}>
         <SearchHeader editable={false} />
         <View style={styles.loader}>
-          <MusicBarLoader
-            barHeight={HEIGHT(40)}
-            betweenSpace={WIDTH(10)}
+          <LineDotsLoader
+            size={WIDTH(5)}
             color={col_primary}
+            dotsNumer={5}
+            betweenSpace={WIDTH(5)}
           />
         </View>
       </View>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TouchableNativeFeedback } from 'react-native';
 import TestImage from '../../ASSETS/IMAGES/sanuka.jpg';
 import { Avatar } from 'react-native-elements';
 import { HEIGHT, WIDTH } from '../../CONSTANTS/Sizes';
@@ -35,7 +35,7 @@ function Song_list({ songObject }) {
   var artistArray = find_artist_by_id(artist, all_artists);
 
   return (
-    <TouchableOpacity
+    <TouchableNativeFeedback
       onPress={() =>
         navigation.navigate('Lyrics_view', {
           songObject,
@@ -110,7 +110,7 @@ function Song_list({ songObject }) {
           </View>
         </View>
       </View>
-    </TouchableOpacity>
+    </TouchableNativeFeedback>
   );
 }
 
