@@ -44,9 +44,7 @@ import GroupHeader from '../COMPONENTS/LYRICS_VIEW/Group_header';
 import ZoomableView from '../COMPONENTS/LYRICS_VIEW/Zoomable_view';
 import Group_header from '../COMPONENTS/LYRICS_VIEW/Group_header';
 
-
-
-
+import useBackButton from '../HOOKS/useBackButton';
 
 
 function Lyrics_view() {
@@ -60,45 +58,22 @@ function Lyrics_view() {
 
 
   const audio_state = useSelector(state => state.audio_reducer);
-  const { playingAudio, } = audio_state;
+  const { playingAudio } = audio_state;
 
   const tempTrack = 'http://topbadu.net/sinhala_mp3/Seekers_Sansara_Sihinaye.mp3';
-  useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', function () {
-      dispatch(release_audio_action(playingAudio));
-      navigation.goBack();
-      return true;
-    });
-
-
-    return () => {
-      BackHandler.removeEventListener('hardwareBackPress', function () {
-        dispatch(release_audio_action(playingAudio));
-        navigation.goBack();
-        return true;
-      });
-    }
-  });
-
-
-
-  // useEffect(() => {
-  //   const tabPressHandler = navigation.addListener('tabPress', e => {
-  //     e.preventDefault(); // dissaple default press of the bottom tab
-  //   });
-
-  //   return tabPressHandler;
-  // }, [navigation]);
 
 
   const goBackFunction = () => {
     dispatch(release_audio_action(playingAudio));
     navigation.goBack();
+    return true;
   }
+
+  useBackButton(goBackFunction, 'one');
+
 
 
   return (
-
     <View style={styles.container}>
 
       {
@@ -138,8 +113,7 @@ const styles = StyleSheet.create({
 
   zoomableContainer: {
     flex: 3,
-
   }
 });
 
-export default Lyrics_view;
+export default React.memo(Lyrics_view);

@@ -3,7 +3,7 @@ import { StatusBar } from 'react-native';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
+import { createStackNavigator, TransitionPresets, } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
 import MaterialCommunityIcons from 'react-native-vector-icons/FontAwesome';
 
@@ -16,6 +16,8 @@ import Playlist_screen from './SCREENS/Playlist';
 import Others_screen from './SCREENS/Others';
 import Single_artist_screen from './SCREENS/Single_artist';
 import Lyrics_view_screen from './SCREENS/Lyrics_view';
+
+import Lyrics_modal from './COMPONENTS/LYRICS_VIEW/Lyrics_modal';
 
 
 
@@ -44,6 +46,7 @@ import Store from './REDUX/Store';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { audio_pause_action } from './REDUX';
+import { configureFonts } from 'react-native-paper';
 
 
 const BottomTab = createMaterialBottomTabNavigator();
@@ -66,6 +69,20 @@ const HeaderBackground = () => {
     </LinearGradient>
   );
 };
+
+
+const config = {
+  animation: 'timing',
+  config: {
+    stiffness: 1000,
+    damping: 500,
+    mass: 3,
+    overshootClamping: true,
+    restDisplacementThreshold: 0.01,
+    restSpeedThreshold: 0.01,
+  },
+};
+
 
 function All_songs_stack_navigation() {
   return (
@@ -93,6 +110,19 @@ function All_songs_stack_navigation() {
         options={{
           ...TransitionPresets.SlideFromRightIOS,
           headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Lyrics_modal"
+        component={Lyrics_modal}
+        options={{
+          //...TransitionPresets.ModalTransition,
+          headerShown: false,
+          transitionSpec: {
+            open: config,
+            close: config
+          }
+
         }}
       />
     </Stack.Navigator>

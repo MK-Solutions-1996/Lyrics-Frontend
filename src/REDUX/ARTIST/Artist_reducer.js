@@ -1,13 +1,14 @@
 import {
     ARTIST_LOAD,
     ARTIST_SUCCESS,
-    ARTIST_ERROR
+    ARTIST_ERROR,
+
 } from './Artist_types';
 
 const initial_state = {
     artist_loading: false,
     all_artists: [],
-    artist_error: ''
+    artist_error: '',
 }
 
 const artist_reducer = (state = initial_state, action) => {

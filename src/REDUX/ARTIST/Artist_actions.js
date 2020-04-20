@@ -1,8 +1,11 @@
 import Axios from 'axios';
+import { API_BASE_URL, API_KEY } from 'react-native-dotenv';
+
 import {
     ARTIST_LOAD,
     ARTIST_SUCCESS,
-    ARTIST_ERROR
+    ARTIST_ERROR,
+
 } from './Artist_types';
 
 const artist_load = () => {
@@ -26,8 +29,13 @@ const artist_fail = (error) => {
 }
 
 
-const API_BASE_URL = 'http://lyrics-server-aws.azurewebsites.net';
-const API_KEY = '123';
+
+
+
+
+
+
+
 
 
 export const fetch_all_artists_action = () => {
@@ -47,3 +55,5 @@ export const fetch_all_artists_action = () => {
             });
     }
 }
+
+

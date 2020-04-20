@@ -10,10 +10,12 @@ import { im_logo, im_default_artist } from '../../CONSTANTS/Imports';
 
 import { test_artist_array } from '../../TestData';
 
-const find_artist_by_id = (artistIdArray) => {
+import { useSelector } from 'react-redux';
+
+const find_artist_by_id = (artistIdArray, all_artists) => {
   var result = [];
   for (var i = 0; i < artistIdArray.length; i++) {
-    test_artist_array.map((artistObject) => {
+    all_artists.map((artistObject) => {
       if (artistIdArray[i] === artistObject._id) {
         result.push(artistObject);
       }
@@ -25,8 +27,12 @@ const find_artist_by_id = (artistIdArray) => {
 function Song_list({ songObject }) {
   const navigation = useNavigation();
 
+  const artist_state = useSelector(state => state.artist_reducer);
+  const { artist_loading, all_artists, artist_error } = artist_state;
+
+
   const { _id, sinhalaTitle, singlishTitle, type, artist } = songObject;
-  var artistArray = find_artist_by_id(artist);
+  var artistArray = find_artist_by_id(artist, all_artists);
 
   return (
     <TouchableOpacity
@@ -151,4 +157,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Song_list;
+export default React.memo(Song_list);

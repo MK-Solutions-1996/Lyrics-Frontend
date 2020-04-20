@@ -241,8 +241,7 @@ const styles = StyleSheet.create({
         fontSize: HEIGHT(12)
 
     }
-
 });
 
 
-export default Solo_header;
+export default React.memo(Solo_header);

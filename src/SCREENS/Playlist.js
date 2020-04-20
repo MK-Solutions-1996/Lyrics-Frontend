@@ -1,9 +1,13 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { STATUS_BAR_HEIGHT, WIDTH } from '../CONSTANTS/Sizes';
 import { col_primary, col_secondary } from '../CONSTANTS/Colors';
+import { im_logo } from '../CONSTANTS/Imports';
 //import { useHeaderHeight } from '@react-navigation/stack';
+
+
+console.log('https://storage.cloud.google.com/lyrics-server-bucket/logo.png');
 
 function Playlist() {
   //const HEADER_HEIGHT = useHeaderHeight();
@@ -17,6 +21,11 @@ function Playlist() {
       />
 
       <Text>Playlist</Text>
+      <Image
+        style={{ width: 200, height: 200 }}
+        source={{ uri: 'https://storage.cloud.google.com/lyrics-server-bucket/logo.png' }}
+
+      />
     </View>
   );
 }

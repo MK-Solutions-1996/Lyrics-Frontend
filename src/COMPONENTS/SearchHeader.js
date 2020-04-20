@@ -1,28 +1,24 @@
-import React from 'react';
-import { View, TextInput, StyleSheet, StatusBar } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, TextInput, StyleSheet } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   col_primary,
   col_secondary,
   col_off_white,
-  col_white,
+  col_white
 } from '../CONSTANTS/Colors';
 import { s_search } from '../CONSTANTS/Sinhala';
 import {
-  //HEADER_HEIGHT,
-  STATUS_BAR_HEIGHT,
   HEIGHT,
   WIDTH,
 } from '../CONSTANTS/Sizes';
 
 
 
+function SearchHeader({ editable, search_action, search_text }) {
 
-
-function SearchHeader({ searchFilter, searchText, editable }) {
   return (
-
     <LinearGradient
       colors={[col_primary, col_secondary]}
       style={{ ...styles.container, backgroundColor: 'blue' }}
@@ -39,14 +35,12 @@ function SearchHeader({ searchFilter, searchText, editable }) {
             style={styles.inputSearch}
             placeholder={s_search}
             placeholderTextColor={col_off_white}
-            onChangeText={(text) => searchFilter(text)}
-            value={searchText}
+            onChangeText={(text) => search_action(text)}
+            value={search_text}
           />
         </View>
       </View>
     </LinearGradient>
-
-
   );
 }
 
@@ -62,10 +56,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: WIDTH(10),
-    // borderColor: col_off_white,
-    // borderBottomWidth: WIDTH(1),
-
-
   },
 
   iconContainer: {
@@ -79,7 +69,6 @@ const styles = StyleSheet.create({
   },
 
   inputSearch: {
-    //flex: 1,
     color: col_white,
     letterSpacing: WIDTH(1),
     fontSize: WIDTH(12),
@@ -88,4 +77,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchHeader;
+export default React.memo(SearchHeader);

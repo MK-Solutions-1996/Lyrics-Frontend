@@ -3,7 +3,8 @@ import {
     View,
     Text,
     StyleSheet,
-    ScrollView
+    ScrollView,
+    TouchableOpacity
 } from 'react-native';
 
 import {
@@ -11,12 +12,19 @@ import {
     col_black,
     col_white,
     col_off_white,
-    col_secondary
+    col_secondary,
+    col_primary
 } from '../../CONSTANTS/Colors';
 
 import { WIDTH, HEIGHT } from '../../CONSTANTS/Sizes';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
+import { useNavigation } from '@react-navigation/native';
+
+
+const FullScreenIcon = () => {
+    return <Icon name="arrows-alt" size={WIDTH(15)} color={col_off_white} style={styles.icon} />
+};
 
 
 const HeartIcon = () => {
@@ -27,6 +35,7 @@ const PlayListIcon = () => {
 };
 
 function Zoomable_view({ lyrics }) {
+    const navigation = useNavigation();
     return (
         <View style={styles.container}>
             <ScrollView style={{ marginTop: HEIGHT(10) }}>
@@ -43,6 +52,15 @@ function Zoomable_view({ lyrics }) {
                     <Text style={styles.lyrics}>{lyrics}</Text>
                 </ReactNativeZoomableView>
             </ScrollView>
+
+            <View style={styles.fullScreenButton}>
+                <TouchableOpacity onPress={() => navigation.navigate('Lyrics_modal', { lyrics: lyrics })}>
+                    <View style={styles.iconContainer}>
+                        <FullScreenIcon />
+                    </View>
+                </TouchableOpacity>
+            </View>
+
             <View style={styles.bottomContainer}>
                 <View style={styles.iconContainer}>
                     <HeartIcon />
@@ -76,6 +94,17 @@ const styles = StyleSheet.create({
         marginVertical: HEIGHT(5),
         letterSpacing: WIDTH(1)
     },
+
+    fullScreenButton: {
+        //width: WIDTH(10),
+        //height: HEIGHT(10),
+        position: 'absolute',
+        //backgroundColor: col_secondary,
+        right: -14,
+        top: 14,
+
+    },
+
 
     bottomContainer: {
         flex: 1,

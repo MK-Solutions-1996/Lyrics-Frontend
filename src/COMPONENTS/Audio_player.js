@@ -186,4 +186,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Audio_player
+export default React.memo(Audio_player)
