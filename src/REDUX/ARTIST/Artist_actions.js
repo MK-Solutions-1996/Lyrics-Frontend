@@ -21,9 +21,9 @@ const artist_success = (artists) => {
     }
 }
 
-const artist_fail = (error) => {
+const artist_error = (error) => {
     return {
-        type: ARTIST_FAIL,
+        type: ARTIST_ERROR,
         payload: error
     }
 }
@@ -50,8 +50,8 @@ export const fetch_all_artists_action = () => {
                 dispatch(artist_success(result));
             })
             .catch(err => {
-                const error = err.response;
-                dispatch(artist_fail(error));
+                //const error = err.response;
+                dispatch(artist_error('error'));
             });
     }
 }

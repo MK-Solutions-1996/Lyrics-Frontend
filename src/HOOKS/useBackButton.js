@@ -1,12 +1,9 @@
 import React, { useEffect } from 'react';
 import { BackHandler } from 'react-native';
 
-function useBackButton(handler, number) {
-    console.log('Num:', number);
-
+function useBackButton(handler, ) {
     useEffect(() => {
         BackHandler.addEventListener("hardwareBackPress", handler);
-
         return () => {
             BackHandler.removeEventListener(
                 "hardwareBackPress",

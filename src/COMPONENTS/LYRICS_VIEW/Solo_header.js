@@ -44,10 +44,6 @@ const BackIcon = () => {
 function Solo_header({ artistArray, songObject, goBackFunction }) {
     const { _id, type, sinhalaTitle, singlishTitle, audio } = songObject;
 
-
-    console.log('audio :', audio.audio);
-
-
     if (artistArray[0].image.imageAvailability) {
         return (
             <ImageBackground

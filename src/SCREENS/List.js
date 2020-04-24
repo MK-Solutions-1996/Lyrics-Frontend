@@ -1,38 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  StyleSheet,
-  FlatList,
-  KeyboardAvoidingView,
-  TouchableNativeFeedback,
-  Text,
-  ToastAndroid,
-  TouchableOpacity
-} from 'react-native';
-import { HEIGHT, WIDTH } from '../CONSTANTS/Sizes';
-import SongList from '../COMPONENTS/ALL_SONGS/Song_list';
-
-import SearchHeader from '../COMPONENTS/SearchHeader';
-import { LineDotsLoader } from 'react-native-indicator';
-
-
-import { col_primary, col_secondary, col_white, col_black } from '../CONSTANTS/Colors';
-
-
+import { View, Text, StyleSheet, ToastAndroid, TouchableNativeFeedback, TouchableOpacity } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import { STATUS_BAR_HEIGHT, WIDTH, HEIGHT } from '../CONSTANTS/Sizes';
+import { col_primary, col_secondary, col_black, col_white } from '../CONSTANTS/Colors';
+import { im_logo } from '../CONSTANTS/Imports';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { s_can_be_a_network_problem, s_try_again } from '../CONSTANTS/Sinhala';
+import { fetch_all_songs_action, fetch_all_artists_action } from '../REDUX';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  fetch_all_songs_action,
-  fetch_all_artists_action,
-  fetch_likes_action
-} from '../REDUX';
-import { s_try_again, s_can_be_a_network_problem } from '../CONSTANTS/Sinhala';
-import Icon from 'react-native-vector-icons/FontAwesome'
+import { LineDotsLoader } from 'react-native-indicator';
+import List_header from '../COMPONENTS/LIST/List_header';
 
 
 
 const ExclamationIcon = () => {
   return <Icon name="exclamation-circle" color={col_secondary} style={styles.icon} size={WIDTH(20)} />
 }
+
 
 const showToastMessage = () => {
   ToastAndroid.show(
@@ -43,48 +27,32 @@ const showToastMessage = () => {
 };
 
 
-function All_songs() {
+function List() {
 
   const dispatch = useDispatch();
-  const { song_loading, all_songs, song_error } = useSelector(state => state.song_reducer);
   const { artist_loading, artist_error } = useSelector(state => state.artist_reducer);
-
-
-  const [searchText, setSearchText] = useState('');
-  const [searchArray, setSearchArray] = useState([]);
+  const { song_loading, all_songs, song_error } = useSelector(state => state.song_reducer);
 
 
   const loadData = () => {
     dispatch(fetch_all_songs_action());
     dispatch(fetch_all_artists_action());
-    dispatch(fetch_likes_action())
   }
 
   useEffect(() => {
-    loadData();
-  }, []);
-
-  useEffect(() => {
-    if (!song_loading) {
-      setSearchArray(all_songs);
+    if (!song_loading || !artist_loading) {
+      //setLikedSongObjectsArray(findSong(likesArray, all_songs));
     }
-  }, [song_loading]);
+  }, [all_songs, song_loading, artist_loading])
 
 
-  const searchFilter = (text) => {
-    setSearchText(text);
-    const newData = all_songs.filter((item) => {
-      const itemData = `${item.singlishTitle} ${item.sinhalaTitle} ${item.song}`;
-      return itemData.indexOf(text) > -1;
-    });
-    setSearchArray(newData);
-  }
 
-
-  if (song_loading || artist_loading) {
+  if (artist_loading || song_loading) {
     return (
       <View style={styles.container}>
-        <SearchHeader editable={false} />
+        <View style={styles.headerContainer}>
+          <List_header />
+        </View>
         <View style={styles.loader}>
           <LineDotsLoader
             size={WIDTH(5)}
@@ -94,13 +62,15 @@ function All_songs() {
           />
         </View>
       </View>
-    );
+    )
   }
   else {
-    if (song_error === "error" || artist_error === "error") {
+    if (artist_error === "error" || song_error === "error") {
       return (
         <View style={styles.container}>
-          <SearchHeader editable={false} />
+          <View style={styles.headerContainer}>
+            <List_header />
+          </View>
           <View style={styles.reloadButtonContainer}>
             <TouchableNativeFeedback onPress={() => loadData()}>
               <View style={styles.reloadButton}>
@@ -116,56 +86,43 @@ function All_songs() {
     }
     else {
       return (
-        <KeyboardAvoidingView
-          enabled
-          style={styles.container}
-          behavior="height"
-        >
+        <View style={styles.container}>
           <View style={styles.headerContainer}>
-            <SearchHeader
-              editable={true}
-              search_text={searchText}
-              search_action={searchFilter}
-            />
+            <List_header />
           </View>
           <View style={styles.listContainer}>
-            <FlatList
-              scrollEnabled={true}
-              data={searchArray}
-              renderItem={({ item, index }) => <SongList key={item._id} songObject={item} />}
-              keyExtractor={(item) => item._id}
-            />
+
           </View>
-        </KeyboardAvoidingView>
+
+        </View>
       );
     }
   }
+
 
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+
   },
   headerContainer: {
     flex: 1,
-    //backgroundColor: 'red'
-  },
-  listContainer: {
-    flex: 8,
-    marginTop: HEIGHT(5),
+
 
   },
-  loadingContainer: {
-    flex: 1,
+  listContainer: {
+    flex: 6,
+
   },
   loader: {
-    flex: 8,
+    flex: 6,
     alignItems: 'center',
     marginTop: HEIGHT(5),
   },
   reloadButtonContainer: {
-    flex: 8,
+    flex: 6,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -194,4 +151,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default React.memo(All_songs);
+export default List;

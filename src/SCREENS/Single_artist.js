@@ -19,12 +19,7 @@ const get_all_songs_of_single_artist = (artistId, allSongs) => {
     }
   }
 
-  // for (var i = 0; i < allSongs.length; i++) {
-  //   var artistArray = allSongs[i].artist;
-  //   if (artistId === artistArray[0]) {
-  //     result.push(allSongs[i]);
-  //   }
-  // }
+
   return result;
 }
 

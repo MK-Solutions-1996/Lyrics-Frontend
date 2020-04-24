@@ -1,0 +1,11 @@
+export const FETCH_LIKES = 'FETCH_LIKES';
+export const DO_LIKE = 'DO_LIKE';
+export const DO_UNLIKE = 'DO_UNLIKE';
+export const INITIATE_SELECT = 'INITIATE_SELECT';
+export const DO_SELECT = 'DO_SELECT';
+export const DO_UNSELECT = 'DO_UNSELECT';
+export const CANCEL_SELECT = 'CANCEL_SELECT';
+export const DO_SELECT_ALL = 'DO_SELECT_ALL';
+export const DO_UNSELECT_ALL = 'DO_UNSELECT_ALL';
+export const DELETE_SELECT = 'DELETE_SELECT';
+export const ERROR_LIKE = 'ERROR_LIKE'

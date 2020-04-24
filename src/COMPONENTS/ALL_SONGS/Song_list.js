@@ -27,12 +27,14 @@ const find_artist_by_id = (artistIdArray, all_artists) => {
 function Song_list({ songObject }) {
   const navigation = useNavigation();
 
-  const artist_state = useSelector(state => state.artist_reducer);
-  const { artist_loading, all_artists, artist_error } = artist_state;
+  const { artist_loading, all_artists, artist_error } = useSelector(state => state.artist_reducer);
+  const { song_loading } = useSelector(state => state.song_reducer);
+
 
 
   const { _id, sinhalaTitle, singlishTitle, type, artist } = songObject;
   var artistArray = find_artist_by_id(artist, all_artists);
+
 
   return (
     <TouchableNativeFeedback
@@ -112,6 +114,7 @@ function Song_list({ songObject }) {
       </View>
     </TouchableNativeFeedback>
   );
+
 }
 
 const styles = StyleSheet.create({

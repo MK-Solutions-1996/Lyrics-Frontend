@@ -40,8 +40,8 @@ export const fetch_all_songs_action = () => {
                 dispatch(song_success(result));
             })
             .catch(err => {
-                const error = err.response;
-                dispatch(song_error(error));
+                //const error = err.response;
+                dispatch(song_error('error'));
             });
     }
 }

@@ -29,7 +29,7 @@ function Lyrics_modal() {
         return true;
     }
 
-    useBackButton(goBackFunction, 'two');
+    useBackButton(goBackFunction);
 
     return (
         <LinearGradient

@@ -12,7 +12,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/FontAwesome';
 import All_songs_screen from './SCREENS/All_songs';
 import All_artists_screen from './SCREENS/All_artists';
 import Likes_screen from './SCREENS/Likes';
-import Playlist_screen from './SCREENS/Playlist';
+import List_screen from './SCREENS/List';
 import Others_screen from './SCREENS/Others';
 import Single_artist_screen from './SCREENS/Single_artist';
 import Lyrics_view_screen from './SCREENS/Lyrics_view';
@@ -147,12 +147,19 @@ function All_artists_stack_navigation() {
             fontWeight: 'bold',
             fontSize: WIDTH(18)
           },
-
         }}
       />
       <Stack.Screen
         name="Single_artist"
         component={Single_artist_screen}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS,
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Lyrics_view" /* Here also called the Lyrics view, Otherwise there will be problem in goBack() */
+        component={Lyrics_view_screen}
         options={{
           ...TransitionPresets.SlideFromRightIOS,
           headerShown: false,
@@ -182,10 +189,18 @@ function Likes_stack_navigation() {
           },
         }}
       />
+      <Stack.Screen
+        name="Lyrics_view"
+        component={Lyrics_view_screen}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS,
+          headerShown: false,
+        }}
+      />
     </Stack.Navigator>
   );
 }
-function PlayList_stack_navigation() {
+function List_stack_navigation() {
   return (
     <Stack.Navigator
       screenOptions={{
@@ -193,8 +208,8 @@ function PlayList_stack_navigation() {
         headerLeft: () => <Header_image />,
       }}>
       <Stack.Screen
-        name="Playlist"
-        component={Playlist_screen}
+        name="List"
+        component={List_screen}
         options={{
           ...TransitionPresets.SlideFromRightIOS,
           title: s_app_title,
@@ -214,9 +229,6 @@ function PlayList_stack_navigation() {
 // Transparent modals => search for "Transparent modals"
 
 
-
-
-
 const Bottom_tab_navigation = () => {
   const dispatch = useDispatch();
   const audio_state = useSelector(state => state.audio_reducer);
@@ -228,8 +240,6 @@ const Bottom_tab_navigation = () => {
       shifting={false}
       activeColor={col_white}
       inactiveColor={col_off_white}
-
-
     >
       <BottomTab.Screen
         name="All_songs"
@@ -301,8 +311,8 @@ const Bottom_tab_navigation = () => {
         })}
       />
       <BottomTab.Screen
-        name="Playlist"
-        component={PlayList_stack_navigation}
+        name="List"
+        component={List_stack_navigation}
         options={{
           tabBarLabel: s_playlists,
           tabBarIcon: ({ color }) => (
@@ -319,7 +329,7 @@ const Bottom_tab_navigation = () => {
               e.preventDefault();
               dispatch(audio_pause_action(playingAudio));
             }
-            navigation.navigate('Playlist');
+            navigation.navigate('List');
           }
         })}
       />

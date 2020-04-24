@@ -47,20 +47,19 @@ import Solo_header from '../COMPONENTS/LYRICS_VIEW/Solo_header';
 import Duet_header from '../COMPONENTS/LYRICS_VIEW/Duet_header';
 
 
+
+
 function Lyrics_view() {
+
   const route = useRoute();
   const navigation = useNavigation();
   const dispatch = useDispatch()
 
-
   const { songObject, artistArray } = route.params;
   const { _id, type, sinhalaTitle, singlishTitle, audio, song } = songObject;
 
-
   const audio_state = useSelector(state => state.audio_reducer);
   const { playingAudio } = audio_state;
-
-  //const tempTrack = 'http://topbadu.net/sinhala_mp3/Seekers_Sansara_Sihinaye.mp3';
 
 
   const goBackFunction = () => {
@@ -69,7 +68,10 @@ function Lyrics_view() {
     return true;
   }
 
-  useBackButton(goBackFunction, 'one');
+  useBackButton(goBackFunction);
+
+
+
 
 
 
@@ -93,7 +95,7 @@ function Lyrics_view() {
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}>
           <View style={styles.zoomableContainer}>
-            <ZoomableView lyrics={song} />
+            <ZoomableView lyrics={song} id={_id} />
           </View>
         </LinearGradient>
       </ImageBackground>

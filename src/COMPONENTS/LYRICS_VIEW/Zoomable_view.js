@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     View,
     Text,
@@ -20,6 +20,8 @@ import { WIDTH, HEIGHT } from '../../CONSTANTS/Sizes';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { audio_pause_action, do_like_action, do_unlike_action } from '../../REDUX';
 
 
 const FullScreenIcon = () => {
@@ -27,15 +29,53 @@ const FullScreenIcon = () => {
 };
 
 
-const HeartIcon = () => {
+const LikedIcon = () => {
+    return <Icon name="heart" size={WIDTH(15)} color={col_white} style={styles.icon} />
+};
+const UnLikedIcon = () => {
     return <Icon name="heart" size={WIDTH(15)} color={col_off_white} style={styles.icon} />
 };
 const PlayListIcon = () => {
     return <Icon name="list-alt" size={WIDTH(15)} color={col_off_white} style={styles.icon} />
 };
 
-function Zoomable_view({ lyrics }) {
+
+
+const checkLike = (id, likesArray) => {
+    var result = false;
+    for (var i = 0; i < likesArray.length; i++) {
+        if (id === likesArray[i]) {
+            result = true;
+        }
+    }
+    return result;
+}
+
+
+
+function Zoomable_view({ lyrics, id }) {
     const navigation = useNavigation();
+    const dispatch = useDispatch()
+
+    const { playingAudio } = useSelector(state => state.audio_reducer);
+    const { likesArray } = useSelector(state => state.like_reducer);
+
+    const [isLiked, setIsLiked] = useState(false);
+
+
+    useEffect(() => {
+        setIsLiked(checkLike(id, likesArray));
+    }, [likesArray])
+
+
+
+
+
+    const navigateToModel = () => {
+        dispatch(audio_pause_action(playingAudio));
+        navigation.navigate('Lyrics_modal', { lyrics: lyrics });
+    }
+
     return (
         <View style={styles.container}>
             <ScrollView style={{ marginTop: HEIGHT(10) }}>
@@ -54,7 +94,7 @@ function Zoomable_view({ lyrics }) {
             </ScrollView>
 
             <View style={styles.fullScreenButton}>
-                <TouchableOpacity onPress={() => navigation.navigate('Lyrics_modal', { lyrics: lyrics })}>
+                <TouchableOpacity onPress={() => navigateToModel()}>
                     <View style={styles.iconContainer}>
                         <FullScreenIcon />
                     </View>
@@ -62,9 +102,24 @@ function Zoomable_view({ lyrics }) {
             </View>
 
             <View style={styles.bottomContainer}>
-                <View style={styles.iconContainer}>
-                    <HeartIcon />
-                </View>
+                {
+                    (isLiked) ?
+                        (
+                            <TouchableOpacity onPress={() => dispatch(do_unlike_action(id, likesArray))}>
+                                <View style={styles.iconContainer}>
+                                    <LikedIcon />
+
+                                </View>
+                            </TouchableOpacity>
+                        )
+                        : (
+                            <TouchableOpacity onPress={() => dispatch(do_like_action(id, likesArray))}>
+                                <View style={styles.iconContainer}>
+                                    <UnLikedIcon />
+                                </View>
+                            </TouchableOpacity>
+                        )
+                }
                 <View style={styles.iconContainer}>
                     <PlayListIcon />
                 </View>
