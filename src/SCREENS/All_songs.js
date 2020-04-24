@@ -23,10 +23,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   fetch_all_songs_action,
   fetch_all_artists_action,
-  fetch_likes_action
+  fetch_likes_action,
+  fetch_list_action
 } from '../REDUX';
 import { s_try_again, s_can_be_a_network_problem } from '../CONSTANTS/Sinhala';
 import Icon from 'react-native-vector-icons/FontAwesome'
+
 
 
 
@@ -58,6 +60,7 @@ function All_songs() {
     dispatch(fetch_all_songs_action());
     dispatch(fetch_all_artists_action());
     dispatch(fetch_likes_action())
+    dispatch(fetch_list_action());
   }
 
   useEffect(() => {

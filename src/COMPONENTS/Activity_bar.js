@@ -24,7 +24,7 @@ const CheckedSquare = () => {
 }
 
 
-function Activity_bar({ selectState, cancel_select, delete_select, unselect_all, select_all }) {
+function Activity_bar({ allSelectState, cancel_select, delete_select, unselect_all, select_all }) {
     const dispatch = useDispatch()
     return (
         <View style={styles.avtivityBarContainer}>
@@ -35,7 +35,7 @@ function Activity_bar({ selectState, cancel_select, delete_select, unselect_all,
                 <TrachIcon />
             </TouchableOpacity>
             {
-                (selectState) ?
+                (allSelectState) ?
                     (
                         <TouchableOpacity onPress={() => dispatch(unselect_all())}>
                             <CheckedSquare />

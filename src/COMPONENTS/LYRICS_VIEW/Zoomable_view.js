@@ -21,7 +21,8 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/ReactNativeZoomableView';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { audio_pause_action, do_like_action, do_unlike_action } from '../../REDUX';
+import { audio_pause_action, do_like_action, do_unlike_action, list_modal_open_action } from '../../REDUX';
+import List_modal from './List_modal';
 
 
 const FullScreenIcon = () => {
@@ -60,14 +61,15 @@ function Zoomable_view({ lyrics, id }) {
     const { playingAudio } = useSelector(state => state.audio_reducer);
     const { likesArray } = useSelector(state => state.like_reducer);
 
+
+
+
     const [isLiked, setIsLiked] = useState(false);
 
 
     useEffect(() => {
         setIsLiked(checkLike(id, likesArray));
     }, [likesArray])
-
-
 
 
 
@@ -108,7 +110,6 @@ function Zoomable_view({ lyrics, id }) {
                             <TouchableOpacity onPress={() => dispatch(do_unlike_action(id, likesArray))}>
                                 <View style={styles.iconContainer}>
                                     <LikedIcon />
-
                                 </View>
                             </TouchableOpacity>
                         )
@@ -120,10 +121,13 @@ function Zoomable_view({ lyrics, id }) {
                             </TouchableOpacity>
                         )
                 }
-                <View style={styles.iconContainer}>
-                    <PlayListIcon />
-                </View>
+                <TouchableOpacity onPress={() => dispatch(list_modal_open_action(id))}>
+                    <View style={styles.iconContainer}>
+                        <PlayListIcon />
+                    </View>
+                </TouchableOpacity>
             </View>
+            <List_modal />
         </View>
     )
 }

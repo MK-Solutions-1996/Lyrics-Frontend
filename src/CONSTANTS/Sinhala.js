@@ -14,4 +14,9 @@ export const s_other_songs = 'ගේ අනිත් සිංදු';
 export const s_try_again = 'නැවත උත්සහ කරන්න​'
 export const s_can_be_a_network_problem = 'නෙට්වර්ක් එකේ ප්‍රශ්නයක් විය හැකිය​';
 export const s_new_one = 'අලුත් එකක්';
+export const s_name = 'නම';
+export const s_provide_a_name = 'නමක් සපයන්න';
+export const s_provide_a_short_name = 'කෙටි නමක් සපයන්න';
+export const s_name_already_exists = '​නම දැනටමත් ඇත';
+
 
