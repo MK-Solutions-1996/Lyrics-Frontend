@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
 
     },
     content: {
+        alignItems: 'center',
         borderRadius: HEIGHT(5),
         paddingHorizontal: WIDTH(5),
         paddingVertical: HEIGHT(5)

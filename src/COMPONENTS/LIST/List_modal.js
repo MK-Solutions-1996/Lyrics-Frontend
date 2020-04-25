@@ -102,7 +102,6 @@ function List_modal() {
                         (listSelectState) ?
                             (
                                 <Activity_bar
-
                                     allSelectState={listSelectAll}
                                     cancel_select={list_cancel_select_action}
                                     delete_select={list_delete_select_action}

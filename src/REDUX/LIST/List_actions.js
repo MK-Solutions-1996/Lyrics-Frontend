@@ -15,7 +15,11 @@ import {
     LIST_ALL_SELECT,
     LIST_ALL_UNSELCT,
     LIST_CANCEL_SELECT,
-    LIST_DELETE_SELECT
+    LIST_DELETE_SELECT,
+
+
+    LIST_NEW_NAME_MODAL_STATE,
+    LIST_OPEN
 } from './List_types';
 
 import AsyncStorage from '@react-native-community/async-storage';
@@ -102,7 +106,7 @@ export const list_create_action = (listName, listArray) => {
             }
             else {
                 const newObject = { listName: listName, songList: [] }
-                listArray.push(newObject);
+                listArray.unshift(newObject); //object push to start of the array
                 await AsyncStorage.setItem('list', JSON.stringify(listArray))
                     .then(() => {
                         dispatch(list_create())
@@ -146,7 +150,6 @@ export const list_add_song_action = (songId, listName, listArray) => {
 
 export const list_remove_song_action = (songId, listName, listArray) => {
     return async (dispatch) => {
-
 
         for (var i = 0; i < listArray.length; i++) {
             if (listArray[i].listName === listName) {
@@ -222,6 +225,25 @@ export const list_delete_select_action = () => {
     return (dispatch) => {
         dispatch(delete_select())
         dispatch(fetch_list_action());
+    }
+}
+
+
+
+
+
+
+export const list_new_name_modal_state_action = () => {
+    return {
+        type: LIST_NEW_NAME_MODAL_STATE
+    }
+}
+
+
+export const list_open_action = (object) => {
+    return {
+        type: LIST_OPEN,
+        payload: object
     }
 }
 

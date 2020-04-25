@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ToastAndroid, TouchableNativeFeedback, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ToastAndroid, TouchableNativeFeedback, TouchableOpacity, FlatList } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { STATUS_BAR_HEIGHT, WIDTH, HEIGHT } from '../CONSTANTS/Sizes';
+import { STATUS_BAR_HEIGHT, WIDTH, HEIGHT, DEVICE_HEIGHT } from '../CONSTANTS/Sizes';
 import { col_primary, col_secondary, col_black, col_white } from '../CONSTANTS/Colors';
 import { im_logo } from '../CONSTANTS/Imports';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -10,6 +10,10 @@ import { fetch_all_songs_action, fetch_all_artists_action } from '../REDUX';
 import { useDispatch, useSelector } from 'react-redux';
 import { LineDotsLoader } from 'react-native-indicator';
 import List_header from '../COMPONENTS/LIST/List_header';
+import List_new_listName_modal from '../COMPONENTS/LIST/List_new_listName_modal';
+import List_list from '../COMPONENTS/LIST/List_list';
+import Activity_bar from '../COMPONENTS/Activity_bar';
+import List_song_list_view from '../COMPONENTS/LIST/List_song_list_view';
 
 
 
@@ -32,6 +36,14 @@ function List() {
   const dispatch = useDispatch();
   const { artist_loading, artist_error } = useSelector(state => state.artist_reducer);
   const { song_loading, all_songs, song_error } = useSelector(state => state.song_reducer);
+  const {
+    listArray,
+    songId,
+    listSelectState,
+    listSelectArray,
+    listSelectAll,
+
+  } = useSelector(state => state.list_reducer);
 
 
   const loadData = () => {
@@ -90,10 +102,23 @@ function List() {
           <View style={styles.headerContainer}>
             <List_header />
           </View>
-          <View style={styles.listContainer}>
+          <View style={styles.contentContainer}>
+            <View style={styles.listContainer}>
+              <FlatList
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                data={listArray}
+                keyExtractor={item => item.listName}
+                renderItem={({ item, index }) => <List_list key={item.listName} listObject={item} index={index} />}
+              />
+            </View>
 
+            <View style={styles.bottomContainer}>
+              <List_song_list_view />
+            </View>
           </View>
 
+          <List_new_listName_modal />
         </View>
       );
     }
@@ -109,13 +134,23 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     flex: 1,
-
-
+  },
+  contentContainer: {
+    flex: 6,
+    //backgroundColor: 'red'
   },
   listContainer: {
-    flex: 6,
-
+    flex: 1,
+    //justifyContent: 'center'
+    //backgroundColor: 'yellow'
   },
+
+  bottomContainer: {
+    flex: 2,
+    //backgroundColor: 'blue'
+  },
+
+
   loader: {
     flex: 6,
     alignItems: 'center',

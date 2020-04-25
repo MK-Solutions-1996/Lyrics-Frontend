@@ -22,7 +22,7 @@ import ReactNativeZoomableView from '@dudigital/react-native-zoomable-view/src/R
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { audio_pause_action, do_like_action, do_unlike_action, list_modal_open_action } from '../../REDUX';
-import List_modal from './List_modal';
+import List_modal from '../LIST/List_modal';
 
 
 const FullScreenIcon = () => {

@@ -6,13 +6,17 @@ import {
     LIST_ERROR,
     LIST_CREATE_ERROR,
     LIST_CREATE,
+
     LIST_DO_SELECT,
     LIST_DO_UNSELECT,
     LIST_ALL_SELECT,
     LIST_ALL_UNSELCT,
     LIST_CANCEL_SELECT,
     LIST_DELETE_SELECT,
-    LIST_INITIATE_SELECT
+    LIST_INITIATE_SELECT,
+
+    LIST_NEW_NAME_MODAL_STATE,
+    LIST_OPEN
 } from './List_types';
 
 import AsyncStorage from '@react-native-community/async-storage';
@@ -27,7 +31,10 @@ const initial_state = {
 
     listSelectState: false,
     listSelectArray: [],
-    listSelectAll: false
+    listSelectAll: false,
+
+    listNewNameModalVisibility: false,
+    listOpenObject: {}
 
 }
 
@@ -35,8 +42,8 @@ const list_reducer = (state = initial_state, action) => {
     let listArray = state.listArray;
     let listSelectArray = state.listSelectArray;
 
-    const deleteSelect = async () => {
 
+    const deleteSelect = async () => {
         if (listArray.length > 0) {
             for (var i = 0; i < listSelectArray.length; i++) {
                 for (var j = 0; j < listArray.length; j++) {
@@ -65,6 +72,8 @@ const list_reducer = (state = initial_state, action) => {
                 }
             })
     }
+
+
 
 
 
@@ -110,10 +119,23 @@ const list_reducer = (state = initial_state, action) => {
             listSelectArray: [...state.listSelectArray, action.payload]
         }
 
-        case LIST_DO_SELECT: return {
-            ...state,
-            listSelectArray: [...state.listSelectArray, action.payload]
-        }
+        case LIST_DO_SELECT:
+            listSelectArray = [...state.listSelectArray, action.payload]
+            if (listSelectArray.length === listArray.length) {
+                return {
+                    ...state,
+                    listSelectAll: true,
+                    listSelectArray: listSelectArray
+                }
+            }
+            else {
+                return {
+                    ...state,
+                    listSelectArray: listSelectArray
+                }
+            }
+
+
 
         case LIST_DO_UNSELECT:
 
@@ -124,20 +146,32 @@ const list_reducer = (state = initial_state, action) => {
                 }
             }
 
-            return {
-                ...state,
-                listSelectArray: listSelectArray
+
+            if (listSelectArray.length === 0) {
+                return {
+                    ...state,
+                    listSelectArray: listSelectArray,
+                    listSelectAll: false,
+                }
+            }
+            else {
+                return {
+                    ...state,
+                    listSelectArray: listSelectArray
+                }
             }
 
-        case LIST_ALL_SELECT:
 
+
+        case LIST_ALL_SELECT:
+            let array = [];
             for (var x = 0; x < listArray.length; x++) {
-                listSelectArray = [...listSelectArray, listArray[x].listName]
+                array.push(listArray[x].listName)
             }
             return {
                 ...state,
                 listSelectAll: true,
-                listSelectArray: listSelectArray
+                listSelectArray: array
             }
 
         case LIST_ALL_UNSELCT: return {
@@ -155,7 +189,21 @@ const list_reducer = (state = initial_state, action) => {
         }
 
 
+        case LIST_NEW_NAME_MODAL_STATE: return {
+            ...state,
+            listNewNameModalVisibility: !state.listNewNameModalVisibility
+        }
+
+        case LIST_OPEN: return {
+            ...state,
+            listOpenObject: action.payload
+        }
+
+
         case LIST_DELETE_SELECT: deleteSelect()
+
+
+
 
 
         default: return state
