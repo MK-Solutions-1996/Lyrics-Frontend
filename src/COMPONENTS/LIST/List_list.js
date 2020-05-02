@@ -49,13 +49,11 @@ function List_list({ listObject, index }) {
 
 
 
-
-
     useEffect(() => {
         if (index === 0) {
             dispatch(list_open_action(listObject))
         }
-    }, []);
+    }, [listArray]);
 
 
     const onPress = () => {
@@ -113,7 +111,6 @@ const styles = StyleSheet.create({
     listName: {
         fontSize: HEIGHT(10),
         fontWeight: 'bold',
-
     },
 })
 

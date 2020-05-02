@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux';
 import List_song_list from './List_song_list';
 import { HEIGHT } from '../../CONSTANTS/Sizes';
 import LinearGradient from 'react-native-linear-gradient';
+import { list_songList_cancel_select_action, list_songList_delete_select_action, list_songList_all_select_action, list_songList_all_unselect_action } from '../../REDUX';
+import Activity_bar from '../Activity_bar';
 
 
 
@@ -31,17 +33,19 @@ function List_song_list_view() {
         listSelectState,
         listSelectArray,
         listSelectAll,
-        listOpenObject
+        listOpenObject,
+        listsongListSelectState,
+        listSongListSelectArray,
+        listSongListSelectAll
     } = useSelector(state => state.list_reducer);
 
     const { all_songs } = useSelector(state => state.song_reducer);
 
     const [songArray, setSongArray] = useState([]);
 
-    // console.log('xx:', listOpenObject);
 
     useEffect(() => {
-        if (listOpenObject) {
+        if (!(typeof (listOpenObject.songList) === "undefined")) {
             setSongArray(findSongs(listOpenObject.songList, all_songs));
         }
     }, [listOpenObject])
@@ -55,9 +59,24 @@ function List_song_list_view() {
                     style={styles.listNameContainer}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 0 }}>
+                    {
+                        (listsongListSelectState) ?
+                            (
+                                <Activity_bar
+                                    allSelectState={listSongListSelectAll}
+                                    cancel_select={list_songList_cancel_select_action}
+                                    delete_select={list_songList_delete_select_action}
+                                    select_all={list_songList_all_select_action}
+                                    unselect_all={list_songList_all_unselect_action}
+                                />
+                            ) :
+                            (
+                                <Text style={styles.listName}>{listOpenObject.listName}</Text>
+                            )
+                    }
                     {/* <View style={styles.listNameContainer}> */}
-                    {/* <Activity_bar /> */}
-                    <Text style={styles.listName}>{listOpenObject.listName}</Text>
+
+
                     {/* </View> */}
                 </LinearGradient>
                 <View style={styles.songListContainer}>

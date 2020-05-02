@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, StatusBar, TextInput, TouchableOpacity } from '
 import Modal from 'react-native-modal';
 import { useSelector, useDispatch } from 'react-redux';
 import { col_white, col_off_white, col_primary, col_secondary } from '../../CONSTANTS/Colors';
-import { list_new_name_modal_state_action } from '../../REDUX';
+import { list_new_name_modal_state_action, list_create_action } from '../../REDUX';
 import { DEVICE_HEIGHT, HEIGHT, DEVICE_WIDTH, WIDTH } from '../../CONSTANTS/Sizes';
 import { s_name } from '../../CONSTANTS/Sinhala';
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -17,7 +17,7 @@ const CloseIcon = () => {
 
 function List_new_listName_modal() {
     const dispatch = useDispatch();
-    const { listNewNameModalVisibility } = useSelector(state => state.list_reducer);
+    const { listArray, listNewNameModalVisibility } = useSelector(state => state.list_reducer);
     const [listName, setListname] = useState('');
 
 
@@ -42,8 +42,9 @@ function List_new_listName_modal() {
                     />
                 </View>
                 <View style={styles.iconContainer}>
-
-                    <OkIcon />
+                    <TouchableOpacity onPress={() => dispatch(list_create_action(listName, listArray))}>
+                        <OkIcon />
+                    </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => dispatch(list_new_name_modal_state_action())}>
                         <CloseIcon />

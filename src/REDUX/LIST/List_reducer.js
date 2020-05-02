@@ -16,7 +16,16 @@ import {
     LIST_INITIATE_SELECT,
 
     LIST_NEW_NAME_MODAL_STATE,
-    LIST_OPEN
+    LIST_OPEN,
+
+
+    LIST_SONGLIST_INITIATE_SELECT,
+    LIST_SONGLIST_DO_SELECT,
+    LIST_SONGLIST_DO_UNSELECT,
+    LIST_SONGLIST_ALL_SELECT,
+    LIST_SONGLIST_ALL_UNSELECT,
+    LIST_SONGLIST_CANCEL_SELECT,
+    LIST_SONGLIST_DELETE_SELECT
 } from './List_types';
 
 import AsyncStorage from '@react-native-community/async-storage';
@@ -34,16 +43,23 @@ const initial_state = {
     listSelectAll: false,
 
     listNewNameModalVisibility: false,
-    listOpenObject: {}
+    listOpenObject: {},
+
+    listsongListSelectState: false,
+    listSongListSelectArray: [],
+    listSongListSelectAll: false,
+
 
 }
 
 const list_reducer = (state = initial_state, action) => {
     let listArray = state.listArray;
     let listSelectArray = state.listSelectArray;
+    let listSongListSelectArray = state.listSongListSelectArray;
+    let listOpenObject = state.listOpenObject;
 
 
-    const deleteSelect = async () => {
+    const deleteSelectedLists = async () => {
         if (listArray.length > 0) {
             for (var i = 0; i < listSelectArray.length; i++) {
                 for (var j = 0; j < listArray.length; j++) {
@@ -68,9 +84,57 @@ const list_reducer = (state = initial_state, action) => {
                     ...state,
                     listSelectAll: false,
                     listSelectState: false,
-                    listError: 'Error in delete'
+                    listError: 'Error in deleteSelectedLists'
                 }
             })
+    }
+
+
+    const deleteSelectedSong = async () => {
+        //const songId = action.payload;
+        if (!(typeof (listOpenObject.songList) === 'undefined')) {
+
+            var songListArray = listOpenObject.songList;
+            for (var x = 0; x < listSongListSelectArray.length; x++) {
+                for (var y = 0; y < songListArray.length; y++) {
+                    if (listSongListSelectArray[x] === songListArray[y]) {
+                        songListArray.splice(y, 1);
+                    }
+                }
+            }
+
+
+
+            console.log('xxxxxxxxxxx:', songListArray)
+
+            for (var z = 0; z < listArray.length; z++) {
+                if (listArray[z].listName === listOpenObject.listName) {
+                    listArray[z] = { listName: listOpenObject.listName, songList: songListArray }
+                }
+            }
+
+            await AsyncStorage.setItem('list', JSON.stringify(listArray))
+                .then(() => {
+                    return {
+                        ...state,
+                        listSongListSelectArray: [],
+                        listSongListSelectAll: false,
+                        listsongListSelectState: false
+                    }
+                })
+                .catch(() => {
+                    return {
+                        ...state,
+                        listSongListSelectAll: false,
+                        listsongListSelectState: false,
+                        listError: 'Error in deleteSelectedSong'
+                    }
+                })
+        }
+
+
+
+
     }
 
 
@@ -106,6 +170,7 @@ const list_reducer = (state = initial_state, action) => {
             listNewOneState: !state.listNewOneState,
             listNameError: null,
             listError: null,
+            listNewNameModalVisibility: false
         }
         case LIST_CREATE_ERROR: return {
             ...state,
@@ -138,7 +203,6 @@ const list_reducer = (state = initial_state, action) => {
 
 
         case LIST_DO_UNSELECT:
-
             let listName = action.payload;
             for (var i = 0; i < listSelectArray.length; i++) {
                 if (listSelectArray[i] === listName) {
@@ -146,20 +210,13 @@ const list_reducer = (state = initial_state, action) => {
                 }
             }
 
+            return {
+                ...state,
+                listSelectArray: listSelectArray,
+                listSelectAll: false,
+            }
 
-            if (listSelectArray.length === 0) {
-                return {
-                    ...state,
-                    listSelectArray: listSelectArray,
-                    listSelectAll: false,
-                }
-            }
-            else {
-                return {
-                    ...state,
-                    listSelectArray: listSelectArray
-                }
-            }
+
 
 
 
@@ -199,11 +256,73 @@ const list_reducer = (state = initial_state, action) => {
             listOpenObject: action.payload
         }
 
+        case LIST_SONGLIST_INITIATE_SELECT: return {
+            ...state,
+            listsongListSelectState: true,
+            listSongListSelectArray: [...listSongListSelectArray, action.payload],
+        }
 
-        case LIST_DELETE_SELECT: deleteSelect()
+        case LIST_SONGLIST_DO_SELECT:
+            listSongListSelectArray = [...listSongListSelectArray, action.payload]
+            if (listSongListSelectArray.length === state.listOpenObject.songList.length) {
+                return {
+                    ...state,
+                    listSongListSelectAll: true,
+                    listSongListSelectArray: listSongListSelectArray
+                }
+            }
+            else {
+                return {
+                    ...state,
+                    listSongListSelectArray: listSongListSelectArray
+                }
+            }
 
 
 
+        case LIST_SONGLIST_DO_UNSELECT:
+            let songId = action.payload;
+            for (var i = 0; i < listSongListSelectArray.length; i++) {
+                if (listSongListSelectArray[i] === songId) {
+                    listSongListSelectArray.splice(i, 1);
+                }
+            }
+
+
+            return {
+                ...state,
+                listSongListSelectArray: listSongListSelectArray,
+                listSongListSelectAll: false,
+            }
+
+
+
+
+        case LIST_SONGLIST_ALL_SELECT: return {
+            ...state,
+            listSongListSelectAll: true,
+            listSongListSelectArray: state.listOpenObject.songList
+        }
+
+
+        case LIST_SONGLIST_ALL_UNSELECT: return {
+            ...state,
+            listSongListSelectAll: false,
+            listSongListSelectArray: []
+        }
+
+        case LIST_SONGLIST_CANCEL_SELECT: return {
+            ...state,
+            listSongListSelectArray: [],
+            listSongListSelectAll: false,
+            listsongListSelectState: false
+        }
+
+
+        case LIST_SONGLIST_DELETE_SELECT: deleteSelectedSong();
+
+
+        case LIST_DELETE_SELECT: deleteSelectedLists();
 
 
         default: return state

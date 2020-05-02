@@ -339,6 +339,9 @@ const Bottom_tab_navigation = () => {
 
 
 
+
+
+
 function App() {
   return (
     <Provider store={Store}>

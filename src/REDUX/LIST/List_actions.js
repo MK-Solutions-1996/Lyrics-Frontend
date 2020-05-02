@@ -19,7 +19,16 @@ import {
 
 
     LIST_NEW_NAME_MODAL_STATE,
-    LIST_OPEN
+    LIST_OPEN,
+
+
+    LIST_SONGLIST_INITIATE_SELECT,
+    LIST_SONGLIST_DO_SELECT,
+    LIST_SONGLIST_DO_UNSELECT,
+    LIST_SONGLIST_ALL_SELECT,
+    LIST_SONGLIST_ALL_UNSELECT,
+    LIST_SONGLIST_CANCEL_SELECT,
+    LIST_SONGLIST_DELETE_SELECT
 } from './List_types';
 
 import AsyncStorage from '@react-native-community/async-storage';
@@ -249,4 +258,58 @@ export const list_open_action = (object) => {
 
 
 
+export const list_songList_initiate_select_action = (songId) => {
+    return {
+        type: LIST_SONGLIST_INITIATE_SELECT,
+        payload: songId
+    }
+}
 
+
+export const list_songList_do_select_action = (songId) => {
+    return {
+        type: LIST_SONGLIST_DO_SELECT,
+        payload: songId
+    }
+}
+
+export const list_songList_do_unselect_action = (songId) => {
+    return {
+        type: LIST_SONGLIST_DO_UNSELECT,
+        payload: songId
+    }
+}
+
+
+export const list_songList_all_select_action = () => {
+    return {
+        type: LIST_SONGLIST_ALL_SELECT
+    }
+}
+
+export const list_songList_all_unselect_action = () => {
+    return {
+        type: LIST_SONGLIST_ALL_UNSELECT
+    }
+}
+
+
+export const list_songList_cancel_select_action = () => {
+    return {
+        type: LIST_SONGLIST_CANCEL_SELECT
+    }
+}
+
+
+const list_songList_delete_select = () => {
+    return {
+        type: LIST_SONGLIST_DELETE_SELECT
+    }
+}
+
+export const list_songList_delete_select_action = () => {
+    return (dispatch) => {
+        dispatch(list_songList_delete_select());
+        dispatch(fetch_list_action());
+    }
+}

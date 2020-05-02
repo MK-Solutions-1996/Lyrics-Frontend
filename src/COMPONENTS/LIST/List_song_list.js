@@ -3,27 +3,72 @@ import { View, Text, StyleSheet, TouchableNativeFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { HEIGHT, WIDTH } from '../../CONSTANTS/Sizes';
 import { col_secondary, col_black, col_white } from '../../CONSTANTS/Colors';
+import { useSelector, useDispatch } from 'react-redux';
+import { list_songList_do_unselect_action, list_songList_do_select_action, list_songList_initiate_select_action } from '../../REDUX';
 
 
 const MusicIcon = () => {
     return <Icon name="music" style={styles.icon} size={HEIGHT(20)} color={col_secondary} />
 }
 
-function List_song_list({ songObject }) {
 
-    const { sinhalaTitle, singlishTitle } = songObject;
+const checkSongId = (songId, selectedArray) => {
+    for (var i = 0; i < selectedArray.length; i++) {
+        if (songId === selectedArray[i]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function List_song_list({ songObject }) {
+    const dispatch = useDispatch();
+    const { _id, sinhalaTitle, singlishTitle } = songObject;
+    const {
+        listArray,
+        songId,
+        listSelectState,
+        listSelectArray,
+        listSelectAll,
+        listOpenObject,
+        listsongListSelectState,
+        listSongListSelectArray,
+        listSongListSelectAll
+    } = useSelector(state => state.list_reducer);
+
+
+
+    const isExist = checkSongId(_id, listSongListSelectArray);
+    console.log('listSongListSelectArray:', listSongListSelectArray);
+    console.log('isExist:', isExist);
+
+
+    const onPress = () => {
+        if (listsongListSelectState) {
+            if (isExist) {
+                dispatch(list_songList_do_unselect_action(_id))
+            }
+            else {
+                dispatch(list_songList_do_select_action(_id));
+            }
+        }
+        else {
+            console.log('go to lyricsView');
+        }
+    }
+
 
     return (
         <TouchableNativeFeedback
-        //onPress={}
-        //onLongPress={}
+            onPress={() => onPress()}
+            onLongPress={() => dispatch(list_songList_initiate_select_action(_id))}
         >
             <View style={{
                 ...styles.container,
-                backgroundColor: col_white,
-                elevation: 3
-                // backgroundColor: (isExist) ? 'rgba(0,0,0,0.5)' : col_white,
-                // elevation: (isExist) ? 0 : 3
+                //backgroundColor: col_white,
+                //elevation: 3
+                backgroundColor: (isExist) ? 'rgba(0,0,0,0.5)' : col_white,
+                elevation: (isExist) ? 0 : 3
             }}>
                 <View style={styles.iconConatiner}>
                     <MusicIcon />
